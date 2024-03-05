@@ -17,10 +17,10 @@ import { VetResolver } from 'app/vets/vet-resolver';
     // AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSelectModule
+    MatSelectModule,
+    SigninComponent
   ],
   declarations: [
-    SigninComponent,
     SignupComponent,
     ForgotPasswordComponent
   ],
