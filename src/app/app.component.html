@@ -31,7 +31,7 @@
           </a>
         </li>
 
-        <li class="dropdown">
+        <li class="dropdown" *ngIf="isAthenticated">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Owners<span class="caret"></span>
           </a>
@@ -43,7 +43,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown">
+        <li class="dropdown" *ngIf="isAthenticated">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-education" aria-hidden="true"></span> Veterinarians<span
               class="caret"></span>
@@ -56,17 +56,17 @@
                   New</span></a></li>
           </ul>
         </li>
-        <li>
+        <li *ngIf="isAthenticated">
           <a routerLink="/pettypes" routerLinkActive="active" title="pettypes">
             <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
             <span> Pet Types</span>
           </a>
         </li>
-        <li>
-          <a routerLink="/specialties" routerLinkActive="active" title="specialties">
-            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-            <span> Specialties</span>
-          </a>
+        <li *ngIf="isAthenticated">
+            <a routerLink="/specialties" routerLinkActive="active" title="specialties">
+              <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+              <span> Specialties</span>
+            </a>
         </li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -74,10 +74,10 @@
           </a>
           <ul class="dropdown-menu">
             <li><a routerLink="/auth/signin">Sign In</a></li>
-            <li><a routerLink="/auth/signup" routerLinkActive="active" 
-              ariaCurrentWhenActive="page">Sign Up</a></li>
-              <li><a routerLink="/auth/signup">Sign Up</a></li>
+            <li><a routerLink="/auth/signup">Sign Up</a></li>
             <li><a routerLink="/auth/forgotpass">Forgot</a></li>
+            <li *ngIf="isAthenticated == false"><a (click)="setAuthenticated()">Try Mode</a></li>
+            <li *ngIf="isAthenticated"><a (click)="setLogout()">Logout</a></li>
           </ul>
         </li>
       </ul>
