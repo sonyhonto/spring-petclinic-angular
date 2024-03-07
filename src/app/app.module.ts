@@ -35,12 +35,13 @@ import {PartsModule} from './parts/parts.module';
 import {SpecialtiesModule} from './specialties/specialties.module';
 import {HttpErrorHandler} from './error.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -54,8 +55,9 @@ import { AuthModule } from './auth/auth.module';
     SpecialtiesModule,
     PartsModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    AuthModule
+    AuthModule,
+    AppRoutingModule
+
   ],
   providers: [
     HttpErrorHandler,

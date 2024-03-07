@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -5,8 +6,6 @@ import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-signin',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })

@@ -27,17 +27,11 @@ import {VetEditComponent} from './vet-edit/vet-edit.component';
 import {NgModule} from '@angular/core';
 import {VetResolver} from './vet-resolver';
 import {SpecResolver} from '../specialties/spec-resolver';
-import { SignupComponent } from 'app/auth/signup/signup.component';
-import { SigninComponent } from 'app/auth/signin/signin.component';
-import { ForgotPasswordComponent } from 'app/auth/forgot-password/forgot-password.component';
 
 const vetRoutes: Routes = [
   {path: 'vets', component: VetListComponent},
   {path: 'vets/add', component: VetAddComponent},
   {path: 'vets/:id/edit', component: VetEditComponent, resolve: {vet: VetResolver, specs: SpecResolver}},
-  {path: 'vets/signin', component: SigninComponent},
-  {path: 'vets/signup', component: SignupComponent},
-  {path: 'vets/forgotpass', component: ForgotPasswordComponent}
 ];
 
 @NgModule({
