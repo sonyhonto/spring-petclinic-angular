@@ -68,7 +68,7 @@
               <span> Specialties</span>
             </a>
         </li>
-        <li class="dropdown">
+        <li class="dropdown" *ngIf="isAthenticated == false">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Login<span class="caret"></span>
           </a>
@@ -77,7 +77,15 @@
             <li><a routerLink="/auth/signup">Sign Up</a></li>
             <li><a routerLink="/auth/forgotpass">Forgot</a></li>
             <li *ngIf="isAthenticated == false"><a (click)="setAuthenticated()">Try Mode</a></li>
-            <li *ngIf="isAthenticated"><a (click)="setLogout()">Logout</a></li>
+            <!-- <li *ngIf="isAthenticated"><a (click)="setLogout()">Logout</a></li> -->
+          </ul>
+        </li>
+        <li class="dropdown" *ngIf="isAthenticated">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-off off" aria-hidden="true"></span> Logout
+          </a>
+          <ul class="dropdown-menu">
+            <li><a (click)="setLogout()"> Quit</a></li>
           </ul>
         </li>
       </ul>

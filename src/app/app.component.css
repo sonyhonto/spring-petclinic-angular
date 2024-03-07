@@ -43,6 +43,9 @@ div.navbar-header {
   width: 100%;
   height: 8rem;
 }
+.off {
+  color:indianred;
+}
 
 @media screen and (max-width: 768px) {
   .content-wrapper {
