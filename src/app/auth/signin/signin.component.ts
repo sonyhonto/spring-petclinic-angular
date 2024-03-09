@@ -36,10 +36,7 @@ export class SigninComponent implements OnInit {
   owner: Owner;
   errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder,
-    private ownerService: OwnerService, private router: Router) {
-    this.owner = {} as Owner;
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
 
