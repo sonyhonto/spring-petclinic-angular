@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -21,11 +22,28 @@ export class SigninComponent implements OnInit {
     "error": {"status": -1}
   }]; 
 
+
+
   signInForm: FormGroup;
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
   authState = '';
 
+  profileForm = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    password: ['', [Validators.required], Validators.minLength(6), Validators.maxLength(52)],
+    // lastName: [''],
+    // email: ['', Validators.required],
+    // address: this.formBuilder.group({
+    //   street: [''],
+    //   city: [''],
+    //   state: [''],
+    //   zip: [''],
+    // }),
+    // aliases: this.formBuilder.array([this.formBuilder.control('')]),
+  });
+
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
 
@@ -49,6 +67,10 @@ export class SigninComponent implements OnInit {
 
   printConsole() {
     console.log("errors mock : ", this.errorsMockTrue);
+  }
+
+  onSubmit() {
+    console.log('on submit');
   }
 
 }

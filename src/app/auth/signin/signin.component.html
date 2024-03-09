@@ -2,52 +2,54 @@
     <p>signin Works!</p>
     <p>LOGIN</p>
     <span>Welcome back to Clinic</span>
-    <div *ngFor="let e of errorsMockTrue">
+    <!-- <div *ngFor="let e of errorsMockTrue">
         <div *ngIf="e.errorEffect == 'SIGN_IN'" class="alert-warning">
             <div *ngIf="e.error400.status === 400">Bad Credentials</div>
             <div *ngIf="e.error401.status === 401">HTTP 401 Unauthorized Error</div>
             <div *ngIf="e.error500.status === 500 || e.error0.status === 0">Internal server error! Please contact our
                 support team.</div>
         </div>
-    </div>
+    </div> -->
 
-
-    <!-- <form [formGroup]="signInForm" (ngSubmit)="onSubmitted()"> -->
-    <form (ngSubmit)="onSubmitted()">
+    <!-- <form>
         <div class="form-group">
             <label for="email">EMAIL</label>
-            <!-- <input type="text" id="email" class="form-control" name="email" formControlName="email" [maxlength]="240"> -->
             <input type="text" id="email" class="form-control" name="email" formControlName="email">
-            <!-- <span *ngIf="signInForm.get('email').invalid && signInForm.get('email').touched" class="alert-danger">
-            Please enter a valid email!
-          </span> -->
         </div>
-
         <div class="form-group">
             <label for="password">PASSWORD</label>
-            <!-- <input type="password" id="password" class="form-control" name="password" formControlName="password" [maxlength]="240"> -->
             <input type="password" id="password" class="form-control" name="password" formControlName="password">
-            <!-- <span *ngIf="signInForm.get('password').invalid && signInForm.get('password').touched">
-            <span *ngIf="signInForm.get('password').errors.required" class="alert-danger">This field is
-              required!</span>
-            <span *ngIf="signInForm.get('password').errors.minlength" class="alert-danger">Minimum password length is
-              6!</span>
-          </span> -->
         </div>
-
         <div class="row">
             <div class="col-md-12">
-                <!-- <button class="btn btn-info" type="submit"
-              [disabled]="signInForm.invalid || signInForm.pending || (authState | async).loading">Login -->
-                <button class="btn btn-info" type="submit">Login
+                <button class="btn btn-default" type="submit">Login
                 </button>
             </div>
         </div>
+    </form> -->
+
+    <form [formGroup]="profileForm" (onSubmit)="onSubmit()">
+        <label for="email">EMAIL</label>
+        <input id="email" type="text" formControlName="email">
+        <label for="password">PASSWORD</label>
+        <input id="password" type="password" name="password" formControlName="password">
+        <button class="" type="submit"> Login</button>
     </form>
 
-    <div class="forgot row">
+    <div class="">
+        <a>
+            <p>Forgot your password?</p>
+        </a>
+    </div>
+
+    <div class="">
+        <p></p>
+        <a><span class="button">Sign up!</span></a>
+    </div>
+
+    <!-- <div class="forgot row">
         <div class="col-md-12">
-            <a routerLink="/vets/forgotpass">
+            <a routerLink="/auth/forgotpass">
                 <p>Forgot your password?</p>
             </a>
         </div>
@@ -56,7 +58,8 @@
     <div class="signup row">
         <div class="col-md-12">
             <p>Don't have an account?
-            <a routerLink="/vets/signup"><span class="button">Sign up!</span></a></p>
+                <a routerLink="/auth/signup"><span class="button">Sign up!</span></a>
+            </p>
         </div>
-    </div>
+    </div> -->
 </div>
