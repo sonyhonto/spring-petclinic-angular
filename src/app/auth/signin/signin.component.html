@@ -30,10 +30,6 @@
                     <input id="password" type="password" class="form-control" name="password"
                         formControlName="password">
                 </div>
-                <label for="home" class="col-sm-2 control-label">PASSWORD</label>
-                <div class="col-sm-10">
-                    <input id="home" type="text" class="form-control" name="home" formControlName="home">
-                </div>
                 <div class="col-sm-10">
                     <div>
                         <span *ngIf="profileForm.controls.email.status === 'INVALID'">This field is required!</span>
@@ -42,9 +38,6 @@
                         <span *ngIf="profileForm.controls.password.status === 'INVALID'">The
                             password should at least be 6 digits!</span>
                     </div>
-                </div>
-                <div class="col-sm-10">
-                    <!-- <span *ngIf="profileForm.controls.password.status === 'INVALID'">Password should be at least 6 characters long.</span> -->
                 </div>
                 <div class="col-sm-10">
                     <button class="btn btn-default" type="submit" [disabled]="!profileForm.valid"> Login</button>

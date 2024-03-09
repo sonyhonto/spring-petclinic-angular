@@ -31,7 +31,6 @@ export class SigninComponent implements OnInit {
   profileForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    home: [''],
   });
 
   owner: Owner;
