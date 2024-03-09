@@ -24,34 +24,18 @@ export class SigninComponent implements OnInit {
     "error": {"status": -1}
   }]; 
 
-
-
-  signInForm: FormGroup;
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
   authState = '';
 
   profileForm = this.formBuilder.group({
-    // email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    email: [''],
-    password: ['', [Validators.required], Validators.minLength(6), Validators.maxLength(52)],
-    // lastName: [''],
-    // email: ['', Validators.required],
-    // address: this.formBuilder.group({
-    //   street: [''],
-    //   city: [''],
-    //   state: [''],
-    //   zip: [''],
-    // }),
-    // aliases: this.formBuilder.array([this.formBuilder.control('')]),
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    home: [''],
   });
 
   owner: Owner;
   errorMessage: string;
-
-  // constructor(private ownerService: OwnerService, private router: Router) {
-  //   this.owner = {} as Owner;
-  // }
 
   constructor(private formBuilder: FormBuilder,
     private ownerService: OwnerService, private router: Router) {
@@ -59,11 +43,6 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.signInForm = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.pattern(this.emailPattern)]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(52)]),
-    });
 
     // this.authState = this.store.select('auth');
     this.authState = '';
@@ -83,7 +62,8 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('on submit');
+    console.log('value : ', this.profileForm.value);
+    console.log('valid : ', this.profileForm.valid);
   }
 
 }
