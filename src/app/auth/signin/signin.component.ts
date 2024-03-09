@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { FormBuilder } from '@angular/forms';
+import { Owner } from 'app/owners/owner';
+import { OwnerService } from 'app/owners/owner.service';
 
 @Component({
   selector: 'app-signin',
@@ -30,7 +32,8 @@ export class SigninComponent implements OnInit {
   authState = '';
 
   profileForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    // email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    email: [''],
     password: ['', [Validators.required], Validators.minLength(6), Validators.maxLength(52)],
     // lastName: [''],
     // email: ['', Validators.required],
@@ -43,7 +46,17 @@ export class SigninComponent implements OnInit {
     // aliases: this.formBuilder.array([this.formBuilder.control('')]),
   });
 
-  constructor(private formBuilder: FormBuilder) {}
+  owner: Owner;
+  errorMessage: string;
+
+  // constructor(private ownerService: OwnerService, private router: Router) {
+  //   this.owner = {} as Owner;
+  // }
+
+  constructor(private formBuilder: FormBuilder,
+    private ownerService: OwnerService, private router: Router) {
+    this.owner = {} as Owner;
+  }
 
   ngOnInit() {
 

@@ -1,8 +1,8 @@
-<div class="signin container">
-    <p>signin Works!</p>
+<!-- <div class="signin container"> -->
+<!-- <p>signin Works!</p>
     <p>LOGIN</p>
-    <span>Welcome back to Clinic</span>
-    <!-- <div *ngFor="let e of errorsMockTrue">
+    <span>Welcome back to Clinic</span> -->
+<!-- <div *ngFor="let e of errorsMockTrue">
         <div *ngIf="e.errorEffect == 'SIGN_IN'" class="alert-warning">
             <div *ngIf="e.error400.status === 400">Bad Credentials</div>
             <div *ngIf="e.error401.status === 401">HTTP 401 Unauthorized Error</div>
@@ -11,7 +11,7 @@
         </div>
     </div> -->
 
-    <!-- <form>
+<!-- <form>
         <div class="form-group">
             <label for="email">EMAIL</label>
             <input type="text" id="email" class="form-control" name="email" formControlName="email">
@@ -28,26 +28,54 @@
         </div>
     </form> -->
 
-    <form [formGroup]="profileForm" (onSubmit)="onSubmit()">
-        <label for="email">EMAIL</label>
-        <input id="email" type="text" formControlName="email">
-        <label for="password">PASSWORD</label>
-        <input id="password" type="password" name="password" formControlName="password">
-        <button class="" type="submit"> Login</button>
-    </form>
 
-    <div class="">
-        <a>
-            <p>Forgot your password?</p>
-        </a>
+<div class="container-fluid">
+    <div class="container xd-container">
+        <h2>
+            Sign In
+        </h2>
+        <!-- <form (ngSubmit)="onSubmit(loginForm.value)" #loginForm="ngForm" class="form-horizontal"> -->
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="form-horizontal">
+            <div class="form-group has-feedback" [formGroup]="profileForm">
+                <label for="email" class="col-sm-2 control-label">EMAIL</label>
+                <div class="col-sm-10">
+                    <input id="email" class="form-control" type="text" formControlName="email">
+                    <span class="glyphicon form-control-feedback"></span>
+                    <span></span>
+                </div>
+                <label for="password" class="col-sm-2 control-label">PASSWORD</label>
+                <div class="col-sm-10">
+                    <input id="password" type="password" class="form-control" name="password"
+                        formControlName="password">
+                </div>
+                <label for="home" class="col-sm-2 control-label">PASSWORD</label>
+                <div class="col-sm-10">
+                    <input id="home" type="text" class="form-control" name="home"
+                        formControlName="home">
+                </div>
+                <div class="col-sm-10">
+                    <button class="btn btn-default" type="submit"> Login</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group">
+            <div class="col-sm-10">
+                <a>
+                    <p>Forgot your password?</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-10">
+                <p>Don't have an account?</p>
+                <a><span class="button">Sign up!</span></a>
+            </div>
+        </div>
     </div>
-
-    <div class="">
-        <p></p>
-        <a><span class="button">Sign up!</span></a>
-    </div>
-
-    <!-- <div class="forgot row">
+</div>
+<!-- <div class="forgot row">
         <div class="col-md-12">
             <a routerLink="/auth/forgotpass">
                 <p>Forgot your password?</p>
@@ -62,4 +90,4 @@
             </p>
         </div>
     </div> -->
-</div>
+<!-- </div> -->
