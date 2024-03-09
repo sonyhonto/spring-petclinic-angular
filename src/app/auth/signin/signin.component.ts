@@ -64,6 +64,7 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     console.log('value : ', this.profileForm.value);
     console.log('valid : ', this.profileForm.valid);
+    console.log('this.profileForm : ', this.profileForm);
   }
 
 }

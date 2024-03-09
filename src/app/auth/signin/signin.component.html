@@ -17,8 +17,8 @@
             Sign In
         </h2>
 
-        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()"  class="form-horizontal">
-            <div class="form-group has-feedback" >
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+            <div class="form-group has-feedback">
                 <label for="email" class="col-sm-2 control-label">EMAIL</label>
                 <div class="col-sm-10">
                     <input id="email" class="form-control" type="text" formControlName="email">
@@ -35,8 +35,19 @@
                     <input id="home" type="text" class="form-control" name="home" formControlName="home">
                 </div>
                 <div class="col-sm-10">
-                    <button class="btn btn-default" type="submit" [disabled]="!profileForm.valid"
-                    > Login</button>
+                    <div>
+                        <span *ngIf="profileForm.controls.email.status === 'INVALID'">This field is required!</span>
+                    </div>
+                    <div *ngIf="profileForm.controls.email.status === 'VALID'">
+                        <span *ngIf="profileForm.controls.password.status === 'INVALID'">The
+                            password should at least be 6 digits!</span>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <!-- <span *ngIf="profileForm.controls.password.status === 'INVALID'">Password should be at least 6 characters long.</span> -->
+                </div>
+                <div class="col-sm-10">
+                    <button class="btn btn-default" type="submit" [disabled]="!profileForm.valid"> Login</button>
                 </div>
             </div>
         </form>
