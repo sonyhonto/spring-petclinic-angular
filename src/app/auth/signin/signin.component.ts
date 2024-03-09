@@ -1,11 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Owner } from 'app/owners/owner';
-import { OwnerService } from 'app/owners/owner.service';
 
 @Component({
   selector: 'app-signin',
@@ -17,12 +12,12 @@ export class SigninComponent implements OnInit {
   errors: [];
   errorsMockTrue = [{
     "errorEffect": 'SIGN_IN',
-    "error400": {"status": 400},
-    "error401": {"status": 401},
-    "error500": {"status": 500},
-    "error0": {"status": 0},
-    "error": {"status": -1}
-  }]; 
+    "error400": { "status": 400 },
+    "error401": { "status": 401 },
+    "error500": { "status": 500 },
+    "error0": { "status": 0 },
+    "error": { "status": -1 }
+  }];
 
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
@@ -36,7 +31,7 @@ export class SigninComponent implements OnInit {
   owner: Owner;
   errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
 
