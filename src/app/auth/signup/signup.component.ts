@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subscribable } from 'rxjs/internal/types';
 
@@ -11,4 +12,22 @@ import { Subscribable } from 'rxjs/internal/types';
 export class SignupComponent {
   signUpForm: any;
   authState: Observable<unknown> | Subscribable<unknown> | Promise<unknown>;
+
+  emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
+
+
+  profileForm = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    passwordGroup: this.formBuilder.group({
+      newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+      newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    }),
+  });
+
+  constructor(private formBuilder: FormBuilder) {
+  }
+
+  onSubmit() {
+    console.log('profile form : ', this.profileForm);
+  }
 }
