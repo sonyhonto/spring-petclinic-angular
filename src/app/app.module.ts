@@ -36,6 +36,7 @@ import { PetTypesModule } from './pettypes/pettypes.module';
 import { SpecialtiesModule } from './specialties/specialties.module';
 import { VetsModule } from './vets/vets.module';
 import { VisitsModule } from './visits/visits.module';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { VisitsModule } from './visits/visits.module';
     PartsModule,
     BrowserAnimationsModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}, {})
 
   ],
   providers: [
