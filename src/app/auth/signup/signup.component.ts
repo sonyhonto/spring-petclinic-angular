@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subscribable } from 'rxjs/internal/types';
 
@@ -21,7 +21,7 @@ export class SignupComponent {
     passwordGroup: this.formBuilder.group({
       newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
       newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    }),
+    }, this.passwordMatchCheckValidator.bind(this))
   });
 
   constructor(private formBuilder: FormBuilder) {
@@ -29,5 +29,12 @@ export class SignupComponent {
 
   onSubmit() {
     console.log('profile form : ', this.profileForm);
+  }
+
+  passwordMatchCheckValidator(control: FormGroup): { [s: string]: boolean } {
+    if (control.value.newPassword !== control.value.newPasswordConfirm) {
+      return { noMatch: true };
+    }
+    return null;
   }
 }
