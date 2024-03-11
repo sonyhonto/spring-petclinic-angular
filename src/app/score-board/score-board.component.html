@@ -1,0 +1,19 @@
+<p>score-board works!</p>
+
+<p>counter works!</p>
+
+
+<button (click)="homeScore()">HomeScore</button>
+
+<div>Current Home: {{ (game$ | async).home }}</div>
+<div>Current Away: {{ (game$ | async).away }}</div>
+
+<button (click)="awayScore()">AwayScore()</button>
+
+<button (click)="resetScore() ">Reset Score</button>
+
+<div>
+    <a routerLink="/scoreboard"> ScoreBoard</a>
+</div>
+
+

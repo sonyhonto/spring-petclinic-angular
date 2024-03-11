@@ -37,11 +37,18 @@ import { SpecialtiesModule } from './specialties/specialties.module';
 import { VetsModule } from './vets/vets.module';
 import { VisitsModule } from './visits/visits.module';
 import { StoreModule } from '@ngrx/store';
+import { CounterComponent } from './counter/counter.component';
+import { reducers } from './auth/store/app.reducers';
+import { counterReducer } from './auth/store-example/counter.reducer';
+import { scoreboardReducer } from './auth/store-scoreboard/scoreboard.reducer';
+import { ScoreBoardComponent } from './score-board/score-board.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CounterComponent,
+    ScoreBoardComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,10 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     AuthModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({ 
+      count: counterReducer,
+      game: scoreboardReducer
+     }, {})
 
   ],
   providers: [

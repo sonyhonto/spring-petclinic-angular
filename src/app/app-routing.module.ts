@@ -25,8 +25,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './parts/page-not-found/page-not-found.component';
 import {WelcomeComponent} from './parts/welcome/welcome.component';
 import { CounterComponent } from './counter/counter.component';
+import { ScoreBoardComponent } from './score-board/score-board.component';
 
 const appRoutes: Routes = [
+  {path: 'scoreboard', component: ScoreBoardComponent},
   {path: 'counter', component: CounterComponent},
   {path: 'welcome', component: WelcomeComponent},
   {path: '', component: WelcomeComponent},
