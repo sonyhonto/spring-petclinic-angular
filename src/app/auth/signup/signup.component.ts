@@ -1,12 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
+import { of } from 'rxjs';
 import { Subscribable } from 'rxjs/internal/types';
 import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
 
+// const initialState: AuthState = {
+//   authenticated: false,
+//   isActive: null,
+//   errors: [],
+//   loading: false
+// };
+
+const initialState: AuthState = {
+  authenticated: true,
+  isActive: null,
+  errors: [],
+  loading: false
+};
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +29,20 @@ import * as AuthActions from '../store/auth.actions';
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
-  authState: Observable<AuthState>;
+  // authState: AuthState = initialState;
+  authState: Observable<AuthState> = of(initialState);
+
+
+  // authState: Observable<AuthState>;
+
+  // authState: Observable<AuthState> = {
+  //   authenticated: false,
+  //   isActive: null,
+  //   errors: [],
+  //   loading: false
+  // };
+
+
 
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
@@ -44,11 +71,17 @@ export class SignupComponent implements OnInit {
     });
 
     this.authState = this.store.select('auth');
+
+    // this.store.select('auth').subscribe(state => {
+    //   this.authState = state;
+    // });
+
   }
 
 
   onSubmit() {
-    console.log('profile form : ', this.profileForm);
+    // console.log('profile form : ', this.profileForm);
+    console.log('signup form : ', this.signUpForm);
   }
 
   onSubmitted() {
