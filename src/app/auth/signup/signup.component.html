@@ -22,7 +22,6 @@
           <div class="col-sm-10">
             <input type="password" id="newPassword" class="form-control" name="newPassword"
               formControlName="newPassword" [maxlength]="160">
-            <!-- [(ngModel)]="passwordGroup.newPassword" -->
             <span
               *ngIf="signUpForm.get('passwordGroup.newPassword').invalid && signUpForm.get('passwordGroup.newPassword').touched">
               <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['required']" class="help-block">This field
@@ -62,11 +61,16 @@
             <!-- <span
               *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
               class="alert-danger">Your passwords must match!</span> -->
-              <!-- <span
-              *ngIf="signUpForm.hasError('notSame')"
-              class="alert-danger">Your passwords must match!</span> -->
+              
+              <!-- *ngIf="signUpForm.hasError('notSame')" -->
+              
+              <!-- <span *ngIf="signUpForm.get('passwordGroup').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!!</span>
               <span
-              *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['confirmedValidator']"
+              *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!??!</span> -->
+
+              <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
               class="alert-danger">Your passwords must match!</span>
 
              

@@ -7,7 +7,6 @@ import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
-import { MyErrorStateMatcher } from '../store/error';
 
 // const initialState: AuthState = {
 //   authenticated: false,
@@ -30,34 +29,9 @@ const initialState: AuthState = {
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
-  // authState: AuthState = initialState;
   authState: Observable<AuthState> = of(initialState);
 
-  // matcher = new MyErrorStateMatcher();
-  matcher: MyErrorStateMatcher;
-
-
-  // authState: Observable<AuthState>;
-
-  // authState: Observable<AuthState> = {
-  //   authenticated: false,
-  //   isActive: null,
-  //   errors: [],
-  //   loading: false
-  // };
-
-
-
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
-
-
-  // profileForm = this.formBuilder.group({
-  //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-  //   passwordGroup: this.formBuilder.group({
-  //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-  //     newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-  //   }, this.passwordMatchCheckValidator.bind(this))
-  // });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,7 +52,7 @@ export class SignupComponent implements OnInit {
     //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
     //   passwordGroup: this.formBuilder.group({
     //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    //     newPasswordConfirm: ['1', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    //     newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
     //   }, { validators: this.checkPasswords })
     // });
 
@@ -91,27 +65,14 @@ export class SignupComponent implements OnInit {
       }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
 
-    this.matcher = new MyErrorStateMatcher();
 
     this.authState = this.store.select('auth');
-
-    // this.store.select('auth').subscribe(state => {
-    //   this.authState = state;
-    // });
 
   }
 
 
   onSubmit() {
-    // console.log('profile form : ', this.profileForm);
     console.log('signup form : ', this.signUpForm);
-
-    this.signUpForm.value.email;
-    this.signUpForm.value.passwordGroup.newPassword;
-    this.signUpForm.value.passwordGroup.newPasswordConfirm;
-
-
-    console.log('component : ', this);
   }
 
   onSubmitted() {
@@ -132,44 +93,27 @@ export class SignupComponent implements OnInit {
   }
 
   // checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
-  //   let pass = group.get('password').value;
-  //   let confirmPass = group.get('confirmPassword').value
+  //   let pass = group.get('newPassword').value;
+  //   let confirmPass = group.get('newPasswordConfirm').value
+  //   group.get('newPasswordConfirm').setErrors({ notSame: true });
   //   return pass === confirmPass ? null : { notSame: true }
   // }
 
-  checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
-    let pass = group.get('newPassword').value;
-    let confirmPass = group.get('newPasswordConfirm').value
-    console.log('confirm pass', pass === confirmPass ? null : { notSame: true });
-    return pass === confirmPass ? null : { notSame: true }
-  }
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    // console.log('controlName : ', controlName);
-    // console.log('matchingControlName : ', matchingControlName);
-
     return (formGroup: FormGroup) => {
-      // console.log('formGroup : ', formGroup);
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
-
-      // formGroup.setErrors({ confirmedValidator: true });
-      // console.log('Validator formGroup : ', formGroup);
       if (
         matchingControl.errors &&
         !matchingControl.errors.confirmedValidator
       ) {
-        // console.log(1);
         return;
       }
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ confirmedValidator: true });
-        // console.log(2);
-        // console.log('matchingControl : ', matchingControl);
-        // console.log('Validator formGroup : ', formGroup);
       } else {
         matchingControl.setErrors(null);
-        // console.log(3);
       }
     };
   }
