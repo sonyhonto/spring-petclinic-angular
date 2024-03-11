@@ -87,7 +87,7 @@ export class SignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       passwordGroup: this.formBuilder.group({
         newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-        newPasswordConfirm: ['1', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+        newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
       }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
 
@@ -145,31 +145,31 @@ export class SignupComponent implements OnInit {
   }
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-    console.log('controlName : ', controlName);
-    console.log('matchingControlName : ', matchingControlName);
+    // console.log('controlName : ', controlName);
+    // console.log('matchingControlName : ', matchingControlName);
 
     return (formGroup: FormGroup) => {
-      console.log('formGroup : ', formGroup);
+      // console.log('formGroup : ', formGroup);
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
 
-      formGroup.setErrors({ confirmedValidator: true });
-      console.log('Validator formGroup : ', formGroup);
-      // if (
-      //   matchingControl.errors &&
-      //   !matchingControl.errors.confirmedValidator
-      // ) {
-      //   console.log(1);
-      //   return;
-      // }
+      // formGroup.setErrors({ confirmedValidator: true });
+      // console.log('Validator formGroup : ', formGroup);
+      if (
+        matchingControl.errors &&
+        !matchingControl.errors.confirmedValidator
+      ) {
+        // console.log(1);
+        return;
+      }
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ confirmedValidator: true });
-        console.log(2);
-        console.log('matchingControl : ', matchingControl);
-        console.log('Validator formGroup : ', formGroup);
+        // console.log(2);
+        // console.log('matchingControl : ', matchingControl);
+        // console.log('Validator formGroup : ', formGroup);
       } else {
         matchingControl.setErrors(null);
-        console.log(3);
+        // console.log(3);
       }
     };
   }
