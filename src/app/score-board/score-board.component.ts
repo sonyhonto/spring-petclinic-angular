@@ -14,7 +14,7 @@ export class ScoreBoardComponent {
 
   game$: Observable<State>;
 
-  constructor(private store: Store<{ count: number, game: State }>) {
+  constructor(private store: Store<{ game: State }>) {
     this.game$ = this.store.select('game');
 
   }

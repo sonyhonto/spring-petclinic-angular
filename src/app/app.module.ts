@@ -42,13 +42,16 @@ import { reducers } from './auth/store/app.reducers';
 import { counterReducer } from './auth/store-example/counter.reducer';
 import { scoreboardReducer } from './auth/store-scoreboard/scoreboard.reducer';
 import { ScoreBoardComponent } from './score-board/score-board.component';
+import { authReducer } from './auth/store/auth.reducer';
+import { AuthStateComponent } from './auth-state/auth-state.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CounterComponent,
-    ScoreBoardComponent
+    ScoreBoardComponent,
+    AuthStateComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { ScoreBoardComponent } from './score-board/score-board.component';
     AppRoutingModule,
     StoreModule.forRoot({ 
       count: counterReducer,
-      game: scoreboardReducer
+      game: scoreboardReducer,
+      auth: authReducer,
      }, {})
 
   ],

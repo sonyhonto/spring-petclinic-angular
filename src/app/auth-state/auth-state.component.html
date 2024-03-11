@@ -1,0 +1,11 @@
+<p>auth-state works!</p>
+
+<button (click)="signIn()">Sign In</button>
+
+<div>Current Authenticated: {{ (auth$ | async).authenticated }}</div>
+<div>Current IsActive: {{ (auth$ | async).isActive }}</div>
+<div>Current Errors: {{ (auth$ | async).errors }}</div>
+<div>Current Loading: {{ (auth$ | async).loading }}</div>
+
+<button (click)="signOut()">Sign Out</button>
+
