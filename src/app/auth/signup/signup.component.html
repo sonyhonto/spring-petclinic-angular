@@ -40,7 +40,9 @@
           <label for="newPasswordConfirm" class="col-sm-2 control-label">PASSWORD REPEAT</label>
           <div class="col-sm-10">
             <input type="password" id="newPasswordConfirm" class="form-control" name="newPasswordConfirm"
-              formControlName="newPasswordConfirm" [maxlength]="160">
+              formControlName="newPasswordConfirm" [maxlength]="160"
+              placeholder="New password"
+              >
             <span
               *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').invalid && signUpForm.get('passwordGroup.newPasswordConfirm').touched">
               <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['required']"
@@ -48,13 +50,26 @@
             </span>
 
 
-
+            <!-- 
             <span *ngIf="signUpForm.get('passwordGroup').invalid && signUpForm.get('passwordGroup').touched"
             >
               <span
               *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
                 class="alert-danger">Your passwords must match!</span>
-            </span>
+            </span> -->
+
+
+            <!-- <span
+              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
+              class="alert-danger">Your passwords must match!</span> -->
+              <!-- <span
+              *ngIf="signUpForm.hasError('notSame')"
+              class="alert-danger">Your passwords must match!</span> -->
+              <span
+              *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['confirmedValidator']"
+              class="alert-danger">Your passwords must match!</span>
+
+             
           </div>
         </div>
         <div class="form-group">
