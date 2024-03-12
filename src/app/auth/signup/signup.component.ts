@@ -7,7 +7,7 @@ import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
-import { MyErrorStateMatcher } from '../store/error';
+// import { MyErrorStateMatcher } from '../store/error';
 
 // const initialState: AuthState = {
 //   authenticated: false,
@@ -30,12 +30,7 @@ const initialState: AuthState = {
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
-  // authState: AuthState = initialState;
   authState: Observable<AuthState> = of(initialState);
-
-  // matcher = new MyErrorStateMatcher();
-  matcher: MyErrorStateMatcher;
-
 
   // authState: Observable<AuthState>;
 
@@ -91,9 +86,12 @@ export class SignupComponent implements OnInit {
       }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
 
-    this.matcher = new MyErrorStateMatcher();
 
     this.authState = this.store.select('auth');
+
+    console.log("store.select('auth') ", this.store.select('auth'));
+    console.log("store :  ", this.store);
+
 
     // this.store.select('auth').subscribe(state => {
     //   this.authState = state;

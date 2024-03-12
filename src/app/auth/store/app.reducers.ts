@@ -8,15 +8,6 @@ export interface HttpError {
   errorEffect: string;
 }
 
-// export interface AppState {
-//     // cart: fromCart.CartState;
-//     // order: fromOrder.OrderState;
-//     // auth: fromAuth.AuthState;
-//     // showcase: fromShowcase.ShowcaseState;
-//     // browse: fromBrowse.BrowseState;
-// }
-
-
 export interface AppState {
   // cart: fromCart.CartState;
   // order: fromOrder.OrderState;
