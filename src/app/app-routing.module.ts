@@ -24,8 +24,14 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './parts/page-not-found/page-not-found.component';
 import {WelcomeComponent} from './parts/welcome/welcome.component';
+import { CounterComponent } from './counter/counter.component';
+import { ScoreBoardComponent } from './score-board/score-board.component';
+import { AuthStateComponent } from './auth-state/auth-state.component';
 
 const appRoutes: Routes = [
+  {path: 'authstate', component: AuthStateComponent},
+  {path: 'scoreboard', component: ScoreBoardComponent},
+  {path: 'counter', component: CounterComponent},
   {path: 'welcome', component: WelcomeComponent},
   {path: '', component: WelcomeComponent},
   {path: '**', component: PageNotFoundComponent}

@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction } from '@ngrx/store';
 import { HttpError } from './app.reducers';
 
 export const SIGN_UP = 'SIGN_UP';
@@ -11,7 +11,6 @@ export const CHECK_IF_LOGGED_IN = 'CHECK_IF_LOGGED_IN';
 export const FETCH_VERIFICATION_STATUS = 'FETCH_VERIFICATION_STATUS';
 export const FETCH_VERIFICATION_STATUS_SUCCESS = 'FETCH_VERIFICATION_STATUS_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
-
 
 export class SignUp implements Action {
   readonly type = SIGN_UP;

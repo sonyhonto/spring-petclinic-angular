@@ -67,8 +67,7 @@ export class SignupComponent implements OnInit {
 
 
     this.authState = this.store.select('auth');
-
-  }
+ }
 
 
   onSubmit() {

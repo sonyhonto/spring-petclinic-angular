@@ -1,3 +1,4 @@
+import { createReducer, on } from "@ngrx/store";
 import { HttpError } from "./app.reducers";
 import * as AuthActions from './auth.actions';
 
@@ -18,8 +19,19 @@ const initialState: AuthState = {
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch (action.type) {
+
         case (AuthActions.SIGN_IN):
+            //changed
+            return {
+                ...state,
+                authenticated: true
+            };
         case (AuthActions.SIGN_OUT):
+            //changed
+            return {
+                ...state,
+                authenticated: false
+            };
         case (AuthActions.SIGN_UP):
             return {
                 ...state,

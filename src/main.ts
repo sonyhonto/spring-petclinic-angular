@@ -35,3 +35,11 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 
 // bootstrapApplication(AppComponent, appConfig)
 //   .catch((err) => console.error(err));
+
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideStore(),
+//     provideState({ name: 'game', reducer: scoreboardReducer })
+//   ],
+// });
