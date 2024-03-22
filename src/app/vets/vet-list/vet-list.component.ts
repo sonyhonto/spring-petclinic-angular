@@ -42,13 +42,22 @@ export class VetListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.vetService.getVets().pipe(
-      finalize(() => {
-        this.isVetDataReceived = true;
-      })
-    ).subscribe(
-      vets => this.vets = vets,
-      error => this.errorMessage = error as any);
+    // this.vetService.getVets().pipe(
+    //   finalize(() => {
+    //     this.isVetDataReceived = true;
+    //   })
+    // ).subscribe(
+    //   vets => this.vets = vets,
+    //   error => this.errorMessage = error as any);
+
+      this.vetService.testGetVets().pipe(
+        finalize(() => {
+          this.isVetDataReceived = true;
+        })
+      ).subscribe(
+        vets => this.vets = vets,
+        error => this.errorMessage = error as any);
+
   }
 
   deleteVet(vet: Vet) {

@@ -20,13 +20,13 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
-import {Vet} from './vet';
-import {HttpClient} from '@angular/common/http';
-import {HandleError, HttpErrorHandler} from '../error.service';
-import {catchError} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { Vet } from './vet';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HandleError, HttpErrorHandler } from '../error.service';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -72,6 +72,25 @@ export class VetService {
     return this.http.delete<number>(this.entityUrl + '/' + vetId)
       .pipe(
         catchError(this.handlerError('deleteVet', 0))
+      );
+  }
+
+
+  testGetVets(): Observable<Vet[]> {
+    let token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
+
+    // const headers = new HttpHeaders(credentials ? {
+    //   authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+    // } : {});
+
+ 
+    const headers = new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token
+    } : {});
+
+    return this.http.get<Vet[]>(this.entityUrl, { headers: headers })
+      .pipe(
+        catchError(this.handlerError('getVets', []))
       );
   }
 
