@@ -20,7 +20,7 @@
  * @author Vitaliy Fedoriv
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Vet } from './vet';
@@ -32,27 +32,24 @@ import { AuthState } from 'app/auth/store/auth.reducer';
 
 
 @Injectable()
-export class VetService {
+export class VetService implements OnInit {
 
   entityUrl = environment.REST_API_URL + 'vets';
-
-  // token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
-  token = '';
-  // auth$: Observable<AuthState>;
-
-  authenticationHeaders = new HttpHeaders(this.token ? {
-    authorization: 'Bearer ' + this.token
-  } : {});
+  token: string;
+  authenticationHeaders: HttpHeaders;
 
   private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
     private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
-    // this.auth$ = this.store.select('auth');
-    // this.auth$.subscribe(state => this.token = state.token);
+  }
 
+  ngOnInit(): void {
     this.store.select('auth').subscribe(state => this.token = state.token);
+    this.authenticationHeaders = new HttpHeaders(this.token ? {
+      authorization: 'Bearer ' + this.token
+    } : {});
   }
 
   getVets(): Observable<Vet[]> {
