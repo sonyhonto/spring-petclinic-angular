@@ -32,72 +32,27 @@ import { AuthState } from 'app/auth/store/auth.reducer';
 
 
 @Injectable()
-export class VetService implements OnInit {
+export class VetService {
 
   entityUrl = environment.REST_API_URL + 'vets';
-  auth$: Observable<AuthState>;
-
-  // token: Observable<string>;
-  token: string;
-
-  token2$: Observable<string>;
-  token2: string;
-  
-  authenticationHeaders: HttpHeaders;
-  authenticationHeaders2: HttpHeaders;
-
   token$: Observable<string>;
-  authenticationHeadersObservable$: Observable<HttpHeaders>;
-
-  // do token and authenticcccationHeaders as 
-  // observable
+  authenticationHeaders: HttpHeaders;
+  headersState$: Observable<HttpHeaders>;
 
   private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
     private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
-
-    this.store.select('auth').subscribe(state => this.token = state.token);
-
-    this.token2$ = this.store.select('auth').pipe(map(state => state.token));
     this.token$ = this.store.select('auth').pipe(map(state => state.token));
-
-    const token1$: Observable<string> = this.store.select('auth').pipe(map(state => state.token));
-    const authenticationHeadersObservable1$: Observable<HttpHeaders> = token1$.pipe(map(token => new HttpHeaders(this.token ? {
-      authorization: 'Bearer ' + this.token 
+    this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token 
     } : {})));
-
-
-    this.authenticationHeaders = new HttpHeaders(this.token ? {
-      authorization: 'Bearer ' + this.token 
-    } : {});
-
-    this.authenticationHeadersObservable$ = this.token$.pipe(map(token => new HttpHeaders(this.token ? {
-      authorization: 'Bearer ' + this.token 
-    } : {})));
-
-    // this.authenticationHeadersObservable$ = of(new HttpHeaders(this.token ? {
-    //   authorization: 'Bearer ' + this.token
-    // } : {}));
-  }
-
-  ngOnInit(): void {
-    this.auth$ = this.store.select('auth');
   }
 
   getVets(): Observable<Vet[]> {
-    // this.auth$.subscribe(state => state.token);
-    this.store.select('auth').subscribe(state => this.token = state.token);
-    console.log("current token : ", this.token);
-
-    this.token2$.subscribe(token2 => this.token2 = token2);
-    console.log("current token 2 : ", this.token2);
-
-    // return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
-    this.authenticationHeadersObservable$.subscribe(headers => this.authenticationHeaders2 = headers)
-    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders2 })
-
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers)
+    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
       );
