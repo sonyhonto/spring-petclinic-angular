@@ -44,6 +44,7 @@ import { scoreboardReducer } from './auth/store-scoreboard/scoreboard.reducer';
 import { ScoreBoardComponent } from './score-board/score-board.component';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthStateComponent } from './auth-state/auth-state.component';
+import { AuthService } from './auth.service';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { AuthStateComponent } from './auth-state/auth-state.component';
   ],
   providers: [
     HttpErrorHandler,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

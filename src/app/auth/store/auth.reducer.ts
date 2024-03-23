@@ -4,19 +4,32 @@ import * as AuthActions from './auth.actions';
 
 export interface AuthState {
     authenticated: boolean;
+    token: string;
     isActive: boolean;
     errors: Array<HttpError>;
     loading: boolean;
 }
 
 
+// const initialState: AuthState = {
+//     authenticated: false,
+//     token: null,
+//     isActive: null,
+//     errors: [],
+//     loading: false
+// };
+
+
 const initialState: AuthState = {
     authenticated: false,
+    token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4',
     isActive: null,
     errors: [],
     loading: false
 };
 
+// const jwt: string = 'token';
+const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4';
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch (action.type) {
 
@@ -24,13 +37,16 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
             //changed
             return {
                 ...state,
-                authenticated: true
+                authenticated: true,
+                token: jwt
+                // token: 'token'
             };
         case (AuthActions.SIGN_OUT):
             //changed
             return {
                 ...state,
-                authenticated: false
+                authenticated: false,
+                token: null
             };
         case (AuthActions.SIGN_UP):
             return {

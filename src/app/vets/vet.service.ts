@@ -51,7 +51,7 @@ export class VetService {
   }
 
   getVets(): Observable<Vet[]> {
-    this.headersState$.subscribe(headers => this.authenticationHeaders = headers)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
@@ -59,6 +59,7 @@ export class VetService {
   }
 
   getVetById(vetId: string): Observable<Vet> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http.get<Vet>((this.entityUrl + '/' + vetId), { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVetById', {} as Vet))
@@ -66,6 +67,7 @@ export class VetService {
   }
 
   updateVet(vetId: string, vet: Vet): Observable<Vet> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http.put<Vet>(this.entityUrl + '/' + vetId, vet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('updateVet', vet))
@@ -73,6 +75,7 @@ export class VetService {
   }
 
   addVet(vet: Vet): Observable<Vet> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http.post<Vet>(this.entityUrl, vet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('addVet', vet))
@@ -80,6 +83,7 @@ export class VetService {
   }
 
   deleteVet(vetId: string): Observable<number> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http.delete<number>(this.entityUrl + '/' + vetId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deleteVet', 0))
