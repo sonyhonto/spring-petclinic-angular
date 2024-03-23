@@ -34,6 +34,12 @@ export class VetService {
 
   entityUrl = environment.REST_API_URL + 'vets';
 
+  token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
+
+  authenticationHeaders = new HttpHeaders(this.token ? {
+    authorization: 'Bearer ' + this.token
+  } : {});
+
   private readonly handlerError: HandleError;
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
@@ -41,35 +47,35 @@ export class VetService {
   }
 
   getVets(): Observable<Vet[]> {
-    return this.http.get<Vet[]>(this.entityUrl)
+    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
       );
   }
 
   getVetById(vetId: string): Observable<Vet> {
-    return this.http.get<Vet>((this.entityUrl + '/' + vetId))
+    return this.http.get<Vet>((this.entityUrl + '/' + vetId), { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVetById', {} as Vet))
       );
   }
 
   updateVet(vetId: string, vet: Vet): Observable<Vet> {
-    return this.http.put<Vet>(this.entityUrl + '/' + vetId, vet)
+    return this.http.put<Vet>(this.entityUrl + '/' + vetId, vet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('updateVet', vet))
       );
   }
 
   addVet(vet: Vet): Observable<Vet> {
-    return this.http.post<Vet>(this.entityUrl, vet)
+    return this.http.post<Vet>(this.entityUrl, vet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('addVet', vet))
       );
   }
 
   deleteVet(vetId: string): Observable<number> {
-    return this.http.delete<number>(this.entityUrl + '/' + vetId)
+    return this.http.delete<number>(this.entityUrl + '/' + vetId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deleteVet', 0))
       );
@@ -77,18 +83,12 @@ export class VetService {
 
 
   testGetVets(): Observable<Vet[]> {
-    let token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
 
     // const headers = new HttpHeaders(credentials ? {
     //   authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     // } : {});
 
- 
-    const headers = new HttpHeaders(token ? {
-      authorization: 'Bearer ' + token
-    } : {});
-
-    return this.http.get<Vet[]>(this.entityUrl, { headers: headers })
+    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
       );
