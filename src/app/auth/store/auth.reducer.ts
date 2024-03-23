@@ -10,19 +10,9 @@ export interface AuthState {
     loading: boolean;
 }
 
-
-// const initialState: AuthState = {
-//     authenticated: false,
-//     token: null,
-//     isActive: null,
-//     errors: [],
-//     loading: false
-// };
-
-
 const initialState: AuthState = {
     authenticated: false,
-    token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4',
+    token: null, 
     isActive: null,
     errors: [],
     loading: false
