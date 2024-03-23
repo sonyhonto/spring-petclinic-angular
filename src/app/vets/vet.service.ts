@@ -35,7 +35,7 @@ import { AuthState } from 'app/auth/store/auth.reducer';
 export class VetService implements OnInit {
 
   entityUrl = environment.REST_API_URL + 'vets';
-  token: string;
+  token$: string;
   authenticationHeaders: HttpHeaders;
 
   private readonly handlerError: HandleError;
@@ -43,13 +43,18 @@ export class VetService implements OnInit {
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
     private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
-  }
 
-  ngOnInit(): void {
+    // this.store.select('auth').subscribe(state => this.token = state.token);
     this.store.select('auth').subscribe(state => this.token = state.token);
+
+
+    console.log("current token : ", this.token);
     this.authenticationHeaders = new HttpHeaders(this.token ? {
       authorization: 'Bearer ' + this.token
     } : {});
+  }
+
+  ngOnInit(): void {
   }
 
   getVets(): Observable<Vet[]> {
