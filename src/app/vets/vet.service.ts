@@ -27,6 +27,8 @@ import { Vet } from './vet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from '../error.service';
 import { catchError } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'app/auth/store/auth.reducer';
 
 
 @Injectable()
@@ -34,7 +36,9 @@ export class VetService {
 
   entityUrl = environment.REST_API_URL + 'vets';
 
-  token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
+  // token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzExNjE4MX0.4tHx6XLeL8DaVVfthO0g-UK2oAOklNIYLSMQB9_kJ-o';
+  token = '';
+  // auth$: Observable<AuthState>;
 
   authenticationHeaders = new HttpHeaders(this.token ? {
     authorization: 'Bearer ' + this.token
@@ -42,8 +46,13 @@ export class VetService {
 
   private readonly handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
+    private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+    // this.auth$ = this.store.select('auth');
+    // this.auth$.subscribe(state => this.token = state.token);
+
+    this.store.select('auth').subscribe(state => this.token = state.token);
   }
 
   getVets(): Observable<Vet[]> {
@@ -78,19 +87,6 @@ export class VetService {
     return this.http.delete<number>(this.entityUrl + '/' + vetId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deleteVet', 0))
-      );
-  }
-
-
-  testGetVets(): Observable<Vet[]> {
-
-    // const headers = new HttpHeaders(credentials ? {
-    //   authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    // } : {});
-
-    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
-      .pipe(
-        catchError(this.handlerError('getVets', []))
       );
   }
 

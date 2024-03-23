@@ -49,15 +49,6 @@ export class VetListComponent implements OnInit {
     ).subscribe(
       vets => this.vets = vets,
       error => this.errorMessage = error as any);
-
-      // this.vetService.testGetVets().pipe(
-      //   finalize(() => {
-      //     this.isVetDataReceived = true;
-      //   })
-      // ).subscribe(
-      //   vets => this.vets = vets,
-      //   error => this.errorMessage = error as any);
-
   }
 
   deleteVet(vet: Vet) {
