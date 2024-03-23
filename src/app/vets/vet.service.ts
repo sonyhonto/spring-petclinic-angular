@@ -22,7 +22,7 @@
 
 import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Vet } from './vet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from '../error.service';
@@ -37,7 +37,6 @@ export class VetService implements OnInit {
   entityUrl = environment.REST_API_URL + 'vets';
   auth$: Observable<AuthState>;
 
-
   // token: Observable<string>;
   token: string;
 
@@ -45,6 +44,10 @@ export class VetService implements OnInit {
   token2: string;
   
   authenticationHeaders: HttpHeaders;
+  authenticationHeaders2: HttpHeaders;
+
+  token$: Observable<string>;
+  authenticationHeadersObservable$: Observable<HttpHeaders>;
 
   // do token and authenticcccationHeaders as 
   // observable
@@ -58,10 +61,25 @@ export class VetService implements OnInit {
     this.store.select('auth').subscribe(state => this.token = state.token);
 
     this.token2$ = this.store.select('auth').pipe(map(state => state.token));
+    this.token$ = this.store.select('auth').pipe(map(state => state.token));
+
+    const token1$: Observable<string> = this.store.select('auth').pipe(map(state => state.token));
+    const authenticationHeadersObservable1$: Observable<HttpHeaders> = token1$.pipe(map(token => new HttpHeaders(this.token ? {
+      authorization: 'Bearer ' + this.token 
+    } : {})));
+
 
     this.authenticationHeaders = new HttpHeaders(this.token ? {
-      authorization: 'Bearer ' + this.token
+      authorization: 'Bearer ' + this.token 
     } : {});
+
+    this.authenticationHeadersObservable$ = this.token$.pipe(map(token => new HttpHeaders(this.token ? {
+      authorization: 'Bearer ' + this.token 
+    } : {})));
+
+    // this.authenticationHeadersObservable$ = of(new HttpHeaders(this.token ? {
+    //   authorization: 'Bearer ' + this.token
+    // } : {}));
   }
 
   ngOnInit(): void {
@@ -73,13 +91,13 @@ export class VetService implements OnInit {
     this.store.select('auth').subscribe(state => this.token = state.token);
     console.log("current token : ", this.token);
 
-    this.token2$.subscribe(token2 => this.token2 = token2)
+    this.token2$.subscribe(token2 => this.token2 = token2);
     console.log("current token 2 : ", this.token2);
-    // console.log("current token 2 : ", this.token2$);
-    // console.log("current token 2 : ", this.token2$.subscribe(token => token));
 
+    // return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
+    this.authenticationHeadersObservable$.subscribe(headers => this.authenticationHeaders2 = headers)
+    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders2 })
 
-    return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
       );
