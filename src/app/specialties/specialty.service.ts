@@ -24,51 +24,66 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Specialty} from './specialty';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '../error.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { AuthState } from 'app/auth/store/auth.reducer';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class SpecialtyService {
 
   private entityUrl = environment.REST_API_URL + 'specialties';
+  token$: Observable<string>;
+  authenticationHeaders: HttpHeaders;
+  headersState$: Observable<HttpHeaders>;
 
   private handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
+    private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+    this.token$ = this.store.select('auth').pipe(map(state => state.token));
+    this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token 
+    } : {})));
   }
 
   getSpecialties(): Observable<Specialty[]> {
-    return this.http.get<Specialty[]>(this.entityUrl)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<Specialty[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getSpecialties', []))
       );
   }
 
   getSpecialtyById(specId: string): Observable<Specialty> {
-    return this.http.get<Specialty>((this.entityUrl + '/' + specId))
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<Specialty>((this.entityUrl + '/' + specId), { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getSpecialtyById', {} as Specialty))
       );
   }
 
   addSpecialty(specialty: Specialty): Observable<Specialty> {
-    return this.http.post<Specialty>(this.entityUrl, specialty)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.post<Specialty>(this.entityUrl, specialty, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('addSpecialty', specialty))
       );
   }
 
   updateSpecialty(specId: string, specialty: Specialty): Observable<Specialty> {
-    return this.http.put<Specialty>((this.entityUrl + '/' + specId), specialty)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.put<Specialty>((this.entityUrl + '/' + specId), specialty, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('updateSpecialty', specialty))
       );
   }
 
   deleteSpecialty(specId: string): Observable<number> {
-    return this.http.delete<number>((this.entityUrl + '/' + specId))
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.delete<number>((this.entityUrl + '/' + specId), { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deleteSpecialty', 0))
       );
