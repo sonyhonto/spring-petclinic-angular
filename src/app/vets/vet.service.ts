@@ -26,7 +26,7 @@ import { Observable } from 'rxjs';
 import { Vet } from './vet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HandleError, HttpErrorHandler } from '../error.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'app/auth/store/auth.reducer';
 
@@ -40,6 +40,9 @@ export class VetService implements OnInit {
 
   // token: Observable<string>;
   token: string;
+
+  token2$: Observable<string>;
+  token2: string;
   
   authenticationHeaders: HttpHeaders;
 
@@ -53,6 +56,9 @@ export class VetService implements OnInit {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
 
     this.store.select('auth').subscribe(state => this.token = state.token);
+
+    this.token2$ = this.store.select('auth').pipe(map(state => state.token));
+
     this.authenticationHeaders = new HttpHeaders(this.token ? {
       authorization: 'Bearer ' + this.token
     } : {});
@@ -66,6 +72,12 @@ export class VetService implements OnInit {
     // this.auth$.subscribe(state => state.token);
     this.store.select('auth').subscribe(state => this.token = state.token);
     console.log("current token : ", this.token);
+
+    this.token2$.subscribe(token2 => this.token2 = token2)
+    console.log("current token 2 : ", this.token2);
+    // console.log("current token 2 : ", this.token2$);
+    // console.log("current token 2 : ", this.token2$.subscribe(token => token));
+
 
     return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
