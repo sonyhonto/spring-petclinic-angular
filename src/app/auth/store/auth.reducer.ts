@@ -12,7 +12,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
     authenticated: false,
-    token: null, 
+    token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4', // null, 
     isActive: null,
     errors: [],
     loading: false
