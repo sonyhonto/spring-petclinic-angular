@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { Token } from './auth/store/token';
 import { HandleError, HttpErrorHandler } from './error.service';
 import { catchError } from 'rxjs/operators';
+import { Credentials } from './auth/store/credentials';
 
 @Injectable()
 export class AuthService {
@@ -60,6 +61,18 @@ export class AuthService {
         //     "password": "12" 
         // }
 
+        const headers = new HttpHeaders(credentials ? {
+            authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
+        } : {});
+
+        return this.http.post<Token>(login_url, credentials, {headers: headers})
+            .pipe(
+                catchError(this.handlerError('getToken', {} as Token))
+            );
+    }
+
+    getToken1(credentials: Credentials): Observable<Token> {
+        const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
         const headers = new HttpHeaders(credentials ? {
             authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
         } : {});

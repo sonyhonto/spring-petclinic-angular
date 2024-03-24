@@ -28,10 +28,16 @@ export class SigninComponent implements OnInit {
   //   "error": { "status": -1 }
   // }];
 
+  // profileForm = this.formBuilder.group({
+  //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+  //   password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+  // });
+
   profileForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
+
 
   constructor(private store: Store<{ auth: AuthState }>,
     private formBuilder: FormBuilder,
@@ -51,27 +57,46 @@ export class SigninComponent implements OnInit {
     this.store.dispatch(new AuthActions.SignOut());
   }
 
+  // onSubmit() {
+  //   // change app stete
+  //   // store
+  //   // get jwt token
+
+  //   console.log("email : " + this.profileForm.value.email);
+  //   console.log("password : " + this.profileForm.value.password);
+  //   this.authService.getToken()
+  //     .subscribe(response => {
+  //       console.log("token email : " + response.email);
+  //       console.log("token jwt : " + response.token);
+  //     });
+  // }
+
+  // setToken() {
+  //   const credentials = {
+  //     email: this.profileForm.value.email,
+  //     password: this.profileForm.value.password
+  //   };
+
+  //   this.authService.getToken1(credentials)
+  //     .subscribe(response => {
+  //       console.log("token email : " + response.email);
+  //       console.log("token jwt : " + response.token);
+  //     });
+  // }
 
   onSubmit() {
-    // change app stete
-    // store
-    // get jwt token
-
+    const credentials = {
+      email: this.profileForm.value.email,
+      password: this.profileForm.value.password
+    };
     console.log("email : " + this.profileForm.value.email);
     console.log("password : " + this.profileForm.value.password);
-    this.authService.getToken()
+    this.authService.getToken1(credentials)
       .subscribe(response => {
         console.log("token email : " + response.email);
         console.log("token jwt : " + response.token);
       });
-
   }
-
-  // onSubmit() {
-  //   console.log('value : ', this.profileForm.value);
-  //   console.log('valid : ', this.profileForm.valid);
-  //   console.log('this.profileForm : ', this.profileForm);
-  // }
 
 }
 
