@@ -88,4 +88,8 @@ export class AuthService {
         return throwError(error);
     }
 
+    // saveToken(token): void {
+    //     Cookies.set('usr', JSON.stringify(token), { expires: 365 });
+    //   }
+
 }

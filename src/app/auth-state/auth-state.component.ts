@@ -21,7 +21,7 @@ export class AuthStateComponent {
 
   
   signIn() {
-    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null }));
+    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: null }));
   }
 
   signOut() {

@@ -45,6 +45,7 @@ import { ScoreBoardComponent } from './score-board/score-board.component';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthStateComponent } from './auth-state/auth-state.component';
 import { AuthService } from './auth.service';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { AuthService } from './auth.service';
       count: counterReducer,
       game: scoreboardReducer,
       auth: authReducer,
-     }, {})
+     }, {}),
+    EffectsModule.forRoot([])
 
   ],
   providers: [

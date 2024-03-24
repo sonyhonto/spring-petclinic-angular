@@ -29,7 +29,7 @@ export class SignUpSuccess implements Action {
 export class SignIn implements Action {
   readonly type = SIGN_IN;
 
-  constructor(public payload: { email: string, password: string }) {
+  constructor(public payload: { email: string, password: string, token: string }) {
   }
 }
 

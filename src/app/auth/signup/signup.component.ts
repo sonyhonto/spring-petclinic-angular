@@ -17,6 +17,7 @@ import * as AuthActions from '../store/auth.actions';
 
 const initialState: AuthState = {
   authenticated: true,
+  token: null,
   isActive: null,
   errors: [],
   loading: false
