@@ -28,51 +28,24 @@ export class AuthService {
         this.handlerError = httpErrorHandler.createHandleError('OwnerService');
     }
 
-    authenticate(credentials, callback) {
+    // authenticate(credentials, callback) {
 
-        const headers = new HttpHeaders(credentials ? {
-            authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-        } : {});
+    //     const headers = new HttpHeaders(credentials ? {
+    //         authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+    //     } : {});
 
-        // this.http.get('user', {headers: headers}).subscribe(response => {
-        this.http.get('auth/signup', { headers: headers }).subscribe(response => {
+    //     // this.http.get('user', {headers: headers}).subscribe(response => {
+    //     this.http.get('auth/signup', { headers: headers }).subscribe(response => {
 
-            if (response['name']) {
-                this.authenticated = true;
-            } else {
-                this.authenticated = false;
-            }
-            return callback && callback();
-        });
+    //         if (response['name']) {
+    //             this.authenticated = true;
+    //         } else {
+    //             this.authenticated = false;
+    //         }
+    //         return callback && callback();
+    //     });
 
-    }
-
-
-    // authenticate2(username, password) 
-    authenticate2() {
-        // initial login
-
-        // bearer 
-        let login_url = 'http://localhost:9966/petclinic/rest/auth/login';
-        // let login_url =  entityUrl + '/rest/auth/login';
-
-        // change type
-        const body = {
-            "email": "A1",
-            "password": "12"
-        };
-
-        this.http.post(login_url, body).subscribe(response => {
-            if (response['token']) {
-                // this. store token = reponse['token']
-                console.log("token : ", response['token']);
-            }
-            console.log("token : ", response['token']);
-        });
-
-        return;
-
-    }
+    // }
 
     getToken(): Observable<Token> {
         const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
@@ -91,32 +64,10 @@ export class AuthService {
             authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
         } : {});
 
-        // return this.http.get<Token>(login_url)
-
-        // return this.http.get<Token>(login_url, {headers: headers})
-        // return this.http.post<Token>(login_url, {headers: headers})
-
-        // return this.http.post<Token>(login_url, credentials)
-
         return this.http.post<Token>(login_url, credentials, {headers: headers})
             .pipe(
                 catchError(this.handlerError('getToken', {} as Token))
-            )
-            ;
+            );
     }
-
-    getTestHome(): 
-     Observable<string> {
-        const login_url = 'http://localhost:9966/petclinic/rest/home';
-
-        return this.http.get<string>(login_url)
-            // .pipe(
-            //     catchError(this.handlerError('getTestHome', {} as string))
-            // )
-            ;
-    }
-
-
-
 
 }

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Owner } from 'app/owners/owner';
-import { AppState } from '../store/app.reducers';
 import { Observable } from 'rxjs/internal/Observable';
-import { AuthState } from '../store/auth.reducer';
-import * as AuthActions from '../../auth/store/auth.actions';
 import { AuthService } from '../../auth.service';
+import * as AuthActions from '../../auth/store/auth.actions';
+import { AuthState } from '../store/auth.reducer';
 
 
 @Component({
@@ -29,15 +27,6 @@ export class SigninComponent implements OnInit {
   //   "error0": { "status": 0 },
   //   "error": { "status": -1 }
   // }];
-
-
-
-  // authState = '';
-
-  // owner: Owner;
-  // errorMessage: string;
-
-  // add app state , store add it to init
 
   profileForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
@@ -68,52 +57,21 @@ export class SigninComponent implements OnInit {
     // store
     // get jwt token
 
-    // this.signIn();
-
     console.log("email : " + this.profileForm.value.email);
     console.log("password : " + this.profileForm.value.password);
-    // this.store.dispatch(new AuthActions.SignIn({
-    //   email: this.signInForm.value.email,
-    //   password: this.signInForm.value.password
-    // }));
-
-    // this.authService.authenticate2();
-
     this.authService.getToken()
       .subscribe(response => {
         console.log("token email : " + response.email);
         console.log("token jwt : " + response.token);
       });
 
-    // this.vetService.getVets().pipe(
-    //   finalize(() => {
-    //     this.isVetDataReceived = true;
-    //   })
-    // ).subscribe(
-    //   vets => this.vets = vets,
-    //   error => this.errorMessage = error as any);
-
   }
-
-  // printConsole() {
-  //   console.log("errors mock : ", this.errorsMockTrue);
-  // }
 
   // onSubmit() {
   //   console.log('value : ', this.profileForm.value);
   //   console.log('valid : ', this.profileForm.valid);
   //   console.log('this.profileForm : ', this.profileForm);
   // }
-
-  getTestHome() {
-    this.authService.getTestHome()
-    .subscribe(response => {
-      console.log("this is hello : ", response);
-    });
-
-    // console.log("getTestHome ...");
-  
-  }
 
 }
 
