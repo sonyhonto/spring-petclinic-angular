@@ -42,7 +42,7 @@ export class PetTypeService {
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
     private store: Store<{ auth: AuthState }>) {
-    this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+    this.handlerError = httpErrorHandler.createHandleError('PettypeService');
     this.token$ = this.store.select('auth').pipe(map(state => state.token));
     this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
       authorization: 'Bearer ' + token 

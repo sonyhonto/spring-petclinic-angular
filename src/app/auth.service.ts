@@ -26,7 +26,7 @@ export class AuthService {
         private httpErrorHandler: HttpErrorHandler) {
 
         this.auth$ = this.store.select('auth');
-        this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+        this.handlerError = httpErrorHandler.createHandleError('AuthService');
     }
 
     // authenticate(credentials, callback) {
