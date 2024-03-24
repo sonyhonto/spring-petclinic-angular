@@ -19,6 +19,9 @@ export class SigninComponent implements OnInit {
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
   errors: [];
+
+  token: string;
+
   // errorsMockTrue = [{
   //   "errorEffect": 'SIGN_IN',
   //   "error400": { "status": 400 },
@@ -50,7 +53,7 @@ export class SigninComponent implements OnInit {
   }
 
   signIn() {
-    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null }));
+    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: this.token }));
   }
 
   signOut() {
@@ -71,19 +74,6 @@ export class SigninComponent implements OnInit {
   //     });
   // }
 
-  // setToken() {
-  //   const credentials = {
-  //     email: this.profileForm.value.email,
-  //     password: this.profileForm.value.password
-  //   };
-
-  //   this.authService.getToken1(credentials)
-  //     .subscribe(response => {
-  //       console.log("token email : " + response.email);
-  //       console.log("token jwt : " + response.token);
-  //     });
-  // }
-
   onSubmit() {
     const credentials = {
       email: this.profileForm.value.email,
@@ -91,11 +81,19 @@ export class SigninComponent implements OnInit {
     };
     console.log("email : " + this.profileForm.value.email);
     console.log("password : " + this.profileForm.value.password);
-    this.authService.getToken1(credentials)
-      .subscribe(response => {
-        console.log("token email : " + response.email);
-        console.log("token jwt : " + response.token);
-      });
+
+    this.authService.getToken(credentials)
+      .subscribe(
+        response => {
+          console.log("token email : " + response.email);
+          console.log("token jwt : " + response.token);
+          this.token = response.token;
+          this.signIn();
+        },
+        error => {
+          // console.log(error.error);
+          console.log("Bad login or password");
+        });
   }
 
 }
