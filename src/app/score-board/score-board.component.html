@@ -7,10 +7,18 @@
 
 <div>Current Home: {{ (game$ | async).home }}</div>
 <div>Current Away: {{ (game$ | async).away }}</div>
+<div>Current Away: {{ (game$ | async).addressField }}</div>
 
 <button (click)="awayScore()">AwayScore()</button>
 
 <button (click)="resetScore() ">Reset Score</button>
+
+<button (click)="addressFieldScore() ">Address Field Score</button>
+
+<!-- <button (click)="set()">Set Game Score</button> -->
+
+<button (click)="setSimpleScores(2, 2) ">Set (2,2) Score</button>
+
 
 <div>
     <a routerLink="/scoreboard"> ScoreBoard</a>
