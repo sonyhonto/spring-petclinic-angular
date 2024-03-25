@@ -71,7 +71,7 @@ export class SigninComponent implements OnInit {
   }
 
   setTokenActionParams() {
-    this.store.dispatch(new AuthActions.SetTokenParams({token: 'setted token'}));
+    this.store.dispatch(new AuthActions.SetTokenParams({ token: 'setted token' }));
   }
 
   signOut() {
@@ -106,12 +106,16 @@ export class SigninComponent implements OnInit {
           console.log("token email : " + response.email);
           console.log("token jwt : " + response.token);
           this.token = response.token;
-          this.signIn();
+          this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
+          // this.signIn();
         },
         error => {
           // console.log(error.error);
           console.log("Bad login or password");
         });
+
+    // const tok = this.token;
+    // this.store.dispatch(new AuthActions.SignIn({ token: tok }));
   }
 
 }
