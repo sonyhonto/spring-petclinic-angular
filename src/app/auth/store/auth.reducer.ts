@@ -24,6 +24,7 @@ const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1
 export const authReducer = createReducer(
     initialState,
     on(AuthActions.tokenScore, state => ({ ...state, token: state.token + '.' })),
+    on(AuthActions.setTokenStore, (state, {token: thisToken}) => ({ ...state, token: thisToken})),
     // on(AuthActions.SIGN_IN, state => ())
 );
 

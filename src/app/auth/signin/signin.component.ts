@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
-import { tokenScore } from '../../auth/store/auth.actions';
+import { setTokenStore, tokenScore } from '../../auth/store/auth.actions';
 
 
 @Component({
@@ -59,6 +59,11 @@ export class SigninComponent implements OnInit {
     this.store.dispatch(new AuthActions.SignIn({ token: tok }));
 
     this.store.dispatch(tokenScore());
+
+  }
+
+  setToken() {
+    this.store.dispatch(setTokenStore({token: 'token'}));
   }
 
   signOut() {

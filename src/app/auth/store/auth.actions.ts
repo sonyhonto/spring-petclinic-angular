@@ -1,4 +1,4 @@
-import { Action, createAction } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 import { HttpError } from './app.reducers';
 
 export const SIGN_UP = 'SIGN_UP';
@@ -13,6 +13,7 @@ export const FETCH_VERIFICATION_STATUS_SUCCESS = 'FETCH_VERIFICATION_STATUS_SUCC
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const tokenScore = createAction('[Scoreboard Page] Home Score');
+export const setTokenStore = createAction('[Scoreboard Page] Token Score', props<{token: string}>());
 
 export class SignUp implements Action {
   readonly type = SIGN_UP;

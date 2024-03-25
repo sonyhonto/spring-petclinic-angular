@@ -63,6 +63,7 @@
 <button (click)="onSubmit()">onSubmit()</button>
 
 <button (click)="signIn()">Set Token (Sign In)</button>
+<button (click)="setToken()">Set Token (to Token)</button>
 
 <div>Current Authenticated: {{ (auth$ | async).authenticated }}</div>
 <div>Current Token: {{ (auth$ | async).token }}</div>
