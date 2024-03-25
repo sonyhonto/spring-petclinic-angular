@@ -92,4 +92,8 @@ export class AuthService {
     //     Cookies.set('usr', JSON.stringify(token), { expires: 365 });
     //   }
 
+    saveToken(token): void {
+        // Cookies.set('usr', JSON.stringify(token), { expires: 365 });
+    }
+
 }
