@@ -46,4 +46,15 @@ spring init --dependencies web,security ui/ && cd ui
 * delete token from state after logout
 
 =
-? light bug in login form   
+? light bug in login form  
+
+
+= 
+example for setting state with value from here
+https://stackoverflow.com/questions/62581360/how-to-set-state-value-in-ngrx-9-x
+
+google : 'set state value angular'
+
+also ?
+? https://stackoverflow.com/questions/57318224/angular-8-set-state-from-http-with-ngrx
+? https://stackoverflow.com/questions/56248432/how-pass-value-to-effect-in-ngrx-angular

@@ -43,15 +43,22 @@ export class VetService {
 
   constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
     private store: Store<{ auth: AuthState }>) {
-    this.handlerError = httpErrorHandler.createHandleError('VetService');
+    this.handlerError = httpErrorHandler.createHandleError('OwnerService');
     this.token$ = this.store.select('auth').pipe(map(state => state.token));
     this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
-      authorization: 'Bearer ' + token 
+      authorization: 'Bearer ' + token
     } : {})));
   }
 
   getVets(): Observable<Vet[]> {
     this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    this.token$.subscribe(thisToken => {
+      console.log("this token : ", thisToken);
+    });
+
+    console.log("get vets .... ");
+    console.log("headers .... ", this.authenticationHeaders);
+
     return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getVets', []))
