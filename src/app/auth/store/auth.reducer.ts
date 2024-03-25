@@ -30,24 +30,52 @@ const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1
 // );
 
 
+// export function authReducer(state = initialState, action: AuthActions.AuthActions) {
+//     switch (action.type) {
+
+//         case (AuthActions.SET_TOKEN_PARAMS):
+//             //changed
+//             return {
+//                 ...state,
+//                 // authenticated: false,
+//                 token: action.params.token
+//             };
+
+//         case (AuthActions.SET_TOKEN):
+//             //changed
+//             return {
+//                 ...state,
+//                 // authenticated: false,
+//                 token: 'class [ SetToken ]'
+//             };
+
+//         case (AuthActions.SIGN_IN):
+//             //changed
+//             return {
+//                 ...state,
+//                 authenticated: true,
+//                 token: action.payload.token
+//             };
+
+//         default:
+//             return state;
+//     }
+// }
+
+
+
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch (action.type) {
 
-        case (AuthActions.SET_TOKEN_PARAMS):
-            //changed
-            return {
-                ...state,
-                // authenticated: false,
-                token: action.params.token
-            };
-
-        case (AuthActions.SET_TOKEN):
-            //changed
-            return {
-                ...state,
-                // authenticated: false,
-                token: 'class [ SetToken ]'
-            };
+        // case (AuthActions.SIGN_IN):
+        //     //changed
+        //     return {
+        //         ...state,
+        //         authenticated: true,
+        //         token: jwt
+        //         // token: token
+        //         // token: 'token'
+        //     };
 
         case (AuthActions.SIGN_IN):
             //changed
@@ -57,78 +85,59 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
                 token: action.payload.token
             };
 
+        case (AuthActions.SIGN_OUT):
+            //changed
+            return {
+                ...state,
+                authenticated: false,
+                token: null
+            };
+        case (AuthActions.SIGN_UP):
+            return {
+                ...state,
+                loading: true
+            };
+        case (AuthActions.SIGN_UP_SUCCESS):
+            return {
+                ...state,
+                errors: [...state.errors.filter(error => error.errorEffect !== action.payload.effect)],
+                loading: false
+            };
+
+        case (AuthActions.SIGN_IN_SUCCESS):
+            return {
+                ...state,
+                authenticated: true,
+                errors: [...state.errors.filter(error => error.errorEffect !== action.payload.effect)],
+                loading: false
+            };
+
+        case (AuthActions.AUTH_ERROR):
+            const errors = [...state.errors];
+            const index = errors.findIndex(error => error.errorEffect === action.payload.errorEffect);
+            if (index !== -1) {
+                errors[index] = action.payload;
+            } else {
+                errors.push(action.payload);
+            }
+            return {
+                ...state,
+                loading: false,
+                errors
+            };
+
+        case (AuthActions.SIGN_OUT_SUCCESS):
+            return initialState;
+
+        case (AuthActions.FETCH_VERIFICATION_STATUS_SUCCESS):
+            return {
+                ...state,
+                isActive: action.payload
+            };
         default:
             return state;
     }
 }
-
-
-
-// export function authReducer(state = initialState, action: AuthActions.AuthActions) {
-//     switch (action.type) {
-
-//         case (AuthActions.SIGN_IN):
-//             //changed
-//             return {
-//                 ...state,
-//                 authenticated: true,
-//                 token: jwt
-//                 // token: token
-//                 // token: 'token'
-//             };
-//         case (AuthActions.SIGN_OUT):
-//             //changed
-//             return {
-//                 ...state,
-//                 authenticated: false,
-//                 token: null
-//             };
-//         case (AuthActions.SIGN_UP):
-//             return {
-//                 ...state,
-//                 loading: true
-//             };
-//         case (AuthActions.SIGN_UP_SUCCESS):
-//             return {
-//                 ...state,
-//                 errors: [...state.errors.filter(error => error.errorEffect !== action.payload.effect)],
-//                 loading: false
-//             };
-
-//         case (AuthActions.SIGN_IN_SUCCESS):
-//             return {
-//                 ...state,
-//                 authenticated: true,
-//                 errors: [...state.errors.filter(error => error.errorEffect !== action.payload.effect)],
-//                 loading: false
-//             };
-
-//         case (AuthActions.AUTH_ERROR):
-//             const errors = [...state.errors];
-//             const index = errors.findIndex(error => error.errorEffect === action.payload.errorEffect);
-//             if (index !== -1) {
-//                 errors[index] = action.payload;
-//             } else {
-//                 errors.push(action.payload);
-//             }
-//             return {
-//                 ...state,
-//                 loading: false,
-//                 errors
-//             };
-
-//         case (AuthActions.SIGN_OUT_SUCCESS):
-//             return initialState;
-
-//         case (AuthActions.FETCH_VERIFICATION_STATUS_SUCCESS):
-//             return {
-//                 ...state,
-//                 isActive: action.payload
-//             };
-//         default:
-//             return state;
-//     }
-// }
 
 
 
