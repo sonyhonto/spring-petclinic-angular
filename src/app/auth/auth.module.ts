@@ -7,6 +7,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AddressExampleComponent } from './store-payload/address-example/address-example.component';
 
 
 @NgModule({
@@ -20,12 +21,14 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
   declarations: [
     SigninComponent,
     SignupComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AddressExampleComponent
   ],
   exports: [
     SigninComponent,
     SignupComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    AddressExampleComponent
   ],
 
   providers: [
