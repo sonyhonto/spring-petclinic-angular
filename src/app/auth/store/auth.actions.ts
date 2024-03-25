@@ -12,6 +12,8 @@ export const FETCH_VERIFICATION_STATUS = 'FETCH_VERIFICATION_STATUS';
 export const FETCH_VERIFICATION_STATUS_SUCCESS = 'FETCH_VERIFICATION_STATUS_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
+export const tokenScore = createAction('[Scoreboard Page] Home Score');
+
 export class SignUp implements Action {
   readonly type = SIGN_UP;
 
