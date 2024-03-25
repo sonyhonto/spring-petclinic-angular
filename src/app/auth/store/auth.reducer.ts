@@ -41,13 +41,21 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
                 token: action.params.token
             };
 
-            case (AuthActions.SET_TOKEN):
-                //changed
-                return {
-                    ...state,
-                    // authenticated: false,
-                    token: 'class [ SetToken ]'
-                };
+        case (AuthActions.SET_TOKEN):
+            //changed
+            return {
+                ...state,
+                // authenticated: false,
+                token: 'class [ SetToken ]'
+            };
+
+        case (AuthActions.SIGN_IN):
+            //changed
+            return {
+                ...state,
+                authenticated: true,
+                token: action.payload.token
+            };
 
         default:
             return state;
