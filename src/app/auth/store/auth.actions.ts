@@ -15,6 +15,19 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const tokenScore = createAction('[Scoreboard Page] Home Score');
 export const setTokenStore = createAction('[Scoreboard Page] Token Score', props<{token: string}>());
 
+
+export const SET_TOKEN = 'SET_TOKEN';
+export class SetToken implements Action {
+  readonly type = SET_TOKEN;
+}
+
+export const SET_TOKEN_PARAMS = 'SET_TOKEN_PARAMS';
+export class SetTokenParams implements Action {
+  readonly type = SET_TOKEN_PARAMS;
+  constructor(public params: { token: string }){}
+}
+
+
 export class SignUp implements Action {
   readonly type = SIGN_UP;
 
@@ -79,4 +92,4 @@ export class FetchVerificationStatusSuccess implements Action {
 export type AuthActions = SignUp | SignUpSuccess | SignIn | SignInSuccess
   | SignOut | SignOutSuccess | CheckIfLoggedIn
   | FetchVerificationStatus | FetchVerificationStatusSuccess
-  | AuthError;
+  | AuthError | SetToken | SetTokenParams;

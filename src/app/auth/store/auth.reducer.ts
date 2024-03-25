@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { HttpError } from "./app.reducers";
 import * as AuthActions from './auth.actions';
+import { HttpParams } from "@angular/common/http";
 
 export interface AuthState {
     authenticated: boolean;
@@ -21,12 +22,38 @@ const initialState: AuthState = {
 // const jwt: string = 'token';
 const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4';
 
-export const authReducer = createReducer(
-    initialState,
-    on(AuthActions.tokenScore, state => ({ ...state, token: state.token + '.' })),
-    on(AuthActions.setTokenStore, (state, {token: thisToken}) => ({ ...state, token: thisToken})),
-    // on(AuthActions.SIGN_IN, state => ())
-);
+// export const authReducer = createReducer(
+//     initialState,
+//     on(AuthActions.tokenScore, state => ({ ...state, token: state.token + '.' })),
+//     on(AuthActions.setTokenStore, (state, { token: thisToken }) => ({ ...state, token: thisToken })),
+//     // on(AuthActions.SetToken, state => ({ ...state, token: state.token + '.'})),
+// );
+
+
+export function authReducer(state = initialState, action: AuthActions.AuthActions) {
+    switch (action.type) {
+
+        case (AuthActions.SET_TOKEN_PARAMS):
+            //changed
+            return {
+                ...state,
+                // authenticated: false,
+                token: action.params.token
+            };
+
+            case (AuthActions.SET_TOKEN):
+                //changed
+                return {
+                    ...state,
+                    // authenticated: false,
+                    token: 'class [ SetToken ]'
+                };
+
+        default:
+            return state;
+    }
+}
+
 
 
 // export function authReducer(state = initialState, action: AuthActions.AuthActions) {
@@ -80,6 +107,34 @@ export const authReducer = createReducer(
 //                 ...state,
 //                 loading: false,
 //                 errors
+//             };
+
+//         case (AuthActions.SIGN_OUT_SUCCESS):
+//             return initialState;
+
+//         case (AuthActions.FETCH_VERIFICATION_STATUS_SUCCESS):
+//             return {
+//                 ...state,
+//                 isActive: action.payload
+//             };
+//         default:
+//             return state;
+//     }
+// }
+
+
+
+
+
+// export function authReducer(state = initialState, action: AuthActions.AuthActions) {
+//     switch (action.type) {
+
+//         case (AuthActions.SIGN_OUT):
+//             //changed
+//             return {
+//                 ...state,
+//                 authenticated: false,
+//                 token: null
 //             };
 
 //         case (AuthActions.SIGN_OUT_SUCCESS):

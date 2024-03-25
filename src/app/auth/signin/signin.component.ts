@@ -63,7 +63,15 @@ export class SigninComponent implements OnInit {
   }
 
   setToken() {
-    this.store.dispatch(setTokenStore({token: 'token'}));
+    this.store.dispatch(setTokenStore({ token: 'token' }));
+  }
+
+  setTokenAction() {
+    this.store.dispatch(new AuthActions.SetToken());
+  }
+
+  setTokenActionParams() {
+    this.store.dispatch(new AuthActions.SetTokenParams({token: 'setted token'}));
   }
 
   signOut() {

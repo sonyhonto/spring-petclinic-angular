@@ -63,7 +63,10 @@
 <button (click)="onSubmit()">onSubmit()</button>
 
 <button (click)="signIn()">Set Token (Sign In)</button>
-<button (click)="setToken()">Set Token (to Token)</button>
+<!-- <button (click)="setToken()">Set Token (to Token)</button> -->
+<button (click)="setTokenAction()">Set Token (by Action)</button>
+<button (click)="setTokenActionParams()">Set Token (by Action with Params)</button>
+
 
 <div>Current Authenticated: {{ (auth$ | async).authenticated }}</div>
 <div>Current Token: {{ (auth$ | async).token }}</div>
