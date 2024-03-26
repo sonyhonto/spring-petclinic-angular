@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
-import { setTokenStore, tokenScore } from '../../auth/store/auth.actions';
+import { setTokenStore } from '../../auth/store/auth.actions';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -45,7 +46,8 @@ export class SigninComponent implements OnInit {
 
   constructor(private store: Store<{ auth: AuthState }>,
     private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -95,13 +97,16 @@ export class SigninComponent implements OnInit {
         response => {
           this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
           this.token = response.token;
+          this.router.navigate(['/welcome']);
 
+              // d
           console.log("token email : " + response.email);
           console.log("token jwt : " + response.token);
         },
         error => {
           // console.log(error.error);
-          console.log("Bad login or password");
+          console.log("Petclinic: Bad login or password");
+            //\d
         });
 
   }
