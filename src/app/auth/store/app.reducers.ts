@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { ActionReducerMap } from "@ngrx/store";
 import { AuthState, authReducer } from "./auth.reducer";
-import { counterReducer } from "../store-example/counter.reducer";
 
 export interface HttpError {
   error: HttpErrorResponse;

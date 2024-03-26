@@ -2,18 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs';
-import { Subscribable } from 'rxjs/internal/types';
 import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
-
-// const initialState: AuthState = {
-//   authenticated: false,
-//   isActive: null,
-//   errors: [],
-//   loading: false
-// };
 
 const initialState: AuthState = {
   authenticated: true,
