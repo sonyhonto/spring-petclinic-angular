@@ -21,6 +21,9 @@
  */
 
 import {Component} from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AuthState } from './auth/store/auth.reducer';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +33,19 @@ import {Component} from '@angular/core';
 export class AppComponent {
 
   isAthenticated: boolean = false;
+
+  constructor(private store: Store<{ auth: AuthState }>) {
+
+    this.store.select('auth').subscribe(state => {
+      this.isAthenticated = state.authenticated;
+    });
+    
+    // this.token$ = this.store.select('auth').pipe(map(state => state.token));
+
+    // this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+    //   authorization: 'Bearer ' + token
+    // } : {})));
+  }
 
   setAuthenticated() {
     this.isAthenticated = true;

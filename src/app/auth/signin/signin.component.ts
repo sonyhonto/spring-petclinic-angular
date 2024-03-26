@@ -57,7 +57,6 @@ export class SigninComponent implements OnInit {
     // this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: this.token }));
     const tok = 'token is set';
     this.store.dispatch(new AuthActions.SignIn({ token: tok }));
-
     // this.store.dispatch(tokenScore()); // simple solution
 
   }
@@ -78,21 +77,10 @@ export class SigninComponent implements OnInit {
     this.store.dispatch(new AuthActions.SignOut());
   }
 
-  // onSubmit() {
+  onSubmit() {
   //   // change app stete
   //   // store
   //   // get jwt token
-
-  //   console.log("email : " + this.profileForm.value.email);
-  //   console.log("password : " + this.profileForm.value.password);
-  //   this.authService.getToken()
-  //     .subscribe(response => {
-  //       console.log("token email : " + response.email);
-  //       console.log("token jwt : " + response.token);
-  //     });
-  // }
-
-  onSubmit() {
     // d
     const credentials = {
       email: this.profileForm.value.email,

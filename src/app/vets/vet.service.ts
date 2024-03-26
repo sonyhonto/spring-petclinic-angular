@@ -52,12 +52,12 @@ export class VetService {
 
   getVets(): Observable<Vet[]> {
     this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
-    this.token$.subscribe(thisToken => {
-      console.log("this token : ", thisToken);
-    });
+    // this.token$.subscribe(thisToken => {
+    //   console.log("this token : ", thisToken);
+    // });
 
-    console.log("get vets .... ");
-    console.log("headers .... ", this.authenticationHeaders);
+    // console.log("get vets .... ");
+    // console.log("headers .... ", this.authenticationHeaders);
 
     return this.http.get<Vet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
