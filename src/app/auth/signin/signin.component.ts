@@ -55,6 +55,8 @@ export class SigninComponent implements OnInit {
     this.auth$ = this.store.select('auth');
   }
 
+
+  //d
   signIn() {
     // this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: this.token }));
     const tok = 'token is set';
@@ -78,6 +80,7 @@ export class SigninComponent implements OnInit {
   signOut() {
     this.store.dispatch(new AuthActions.SignOut());
   }
+  //\d
 
   onSubmit() {
   //   // change app stete
