@@ -23,7 +23,9 @@
 import {Component} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthState } from './auth/store/auth.reducer';
+import * as AuthActions from './auth/store/auth.actions';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +36,8 @@ export class AppComponent {
 
   isAthenticated: boolean = false;
 
-  constructor(private store: Store<{ auth: AuthState }>) {
+  constructor(private store: Store<{ auth: AuthState }>,
+    private router: Router) {
 
     this.store.select('auth').subscribe(state => {
       this.isAthenticated = state.authenticated;
@@ -53,5 +56,7 @@ export class AppComponent {
 
   setLogout() {
     this.isAthenticated = false;
+    this.store.dispatch(new AuthActions.SignOut());
+    this.router.navigate(['/welcome']);
   }
 }
