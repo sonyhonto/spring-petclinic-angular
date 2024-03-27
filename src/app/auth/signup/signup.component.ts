@@ -93,7 +93,7 @@ export class SignupComponent implements OnInit {
     //     console.log("Petclinic: Bad login or password ... signup");
     //   });
 
-    this.authService.testRequest();
+    this.authService.testRequest(credentials);
 
 
     // // // //

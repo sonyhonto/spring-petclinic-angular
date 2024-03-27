@@ -76,7 +76,7 @@ export class AuthService {
         ;
     }
 
-    testRequest() {
+    testRequest(user: Credentials) {
 
         // const credentials =       {
         //     email: this.signUpForm.value.email,
@@ -119,15 +119,11 @@ export class AuthService {
         //     });
 
         const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
-        // const credentials = {
-        //     email: 'A1',
-        //     password: '12',
-        // }
 
         const credentials =
         {
-            "usernamemail": 'A64', //"V50",
-            "password": '12', //12,
+            "usernamemail": user.email,// 'A64', //"V50",
+            "password": user.password, //'12', //12,
             "roles": ["ADMIN"]
         };
         // const headers = new HttpHeaders(credentials ? {
@@ -144,42 +140,6 @@ export class AuthService {
                 console.log("response .... .... .... ", response);
             });
 
-
-        // const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test_post';
-        // const credentials = {
-        //     email: 'A1',
-        //     password: '12',
-        // }
-        // const headers = new HttpHeaders(credentials ? {
-        //     authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
-        // } : {});
-        // this.http.post<string>(signin_url, { headers: headers })
-        //     .pipe(
-        //         catchError(this.handleError)
-        //     )
-        //     .subscribe(response => {
-        //         console.log("response .... .... .... ", response);
-        //     });
-
-
-
-        // const credentials = {
-        //     email: 'A1',
-        //     password: '12',
-        // }
-
-        // const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
-        // const headers = new HttpHeaders(credentials ? {
-        //     authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
-        // } : {});
-
-        // this.http.post<Token>(login_url, credentials, { headers: headers })
-        //     .pipe(
-        //         catchError(this.handleError)
-        //     )
-        //     .subscribe(response => {
-        //         console.log("response .... .... .... ", response);
-        //     });
     }
 
     getToken(credentials: Credentials): Observable<Token> {
