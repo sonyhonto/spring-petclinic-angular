@@ -27,6 +27,7 @@ export class SignupComponent implements OnInit {
   authState: Observable<AuthState> = of(initialState);
 
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
+  isSuccessOnRegistration = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,18 +80,21 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(credentials)
       .subscribe(
         response => {
-          this.router.navigate(['/auth/signin']);
-
-
-          // // //
           this.store.dispatch(new AuthActions.SignUp(
             {
               email: this.signUpForm.value.email,
               password: this.signUpForm.value.passwordGroup.newPassword,
               // passwordRepeat: this.signUpForm.value.passwordGroup.newPasswordConfirm
             }));
+
+          this.isSuccessOnRegistration = true;
+
+          setTimeout(() => {
+            // this.router.navigate(['nextRoute']);
+            this.router.navigate(['/auth/signin']);
+          }, 3000);
         },
-        error => console.log("Inalid login name or password")
+        error => console.log("Invalid login name or password")
       );
 
   }

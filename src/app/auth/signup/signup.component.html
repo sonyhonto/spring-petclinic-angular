@@ -78,6 +78,13 @@
              
           </div>
         </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <span *ngIf="isSuccessOnRegistration" class="alert-success"> Registration was sucessful!</span>
+          </div>
+        </div>
+
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button class="btn btn-default" type="submit"> Register</button>
@@ -92,6 +99,9 @@
             </p>
           </div>
         </div>
+
+
+
 
       </div>
     </form>
