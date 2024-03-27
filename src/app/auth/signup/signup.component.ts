@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
 import { AuthService } from 'app/auth.service';
+import { Router } from '@angular/router';
 
 const initialState: AuthState = {
   authenticated: true,
@@ -30,6 +31,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private router: Router,
     private store: Store<AppState>) {
   }
 
@@ -60,18 +62,12 @@ export class SignupComponent implements OnInit {
       }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
 
-
     this.authState = this.store.select('auth');
- }
-
-
-  onSubmit() {
-    console.log('signup form : ', this.signUpForm);
   }
 
   onSubmitted() {
 
-    const credentials =       {
+    const credentials = {
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.passwordGroup.newPassword,
     }
@@ -80,29 +76,23 @@ export class SignupComponent implements OnInit {
     console.log("email (onsubmitted): ", this.signUpForm.value.email);
     console.log("password (onsubmitted): ", this.signUpForm.value.passwordGroup.newPassword);
 
-
-    // this.authService.signUp(credentials)
-    // .subscribe(
-    //   response => {
-    //     // this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
-    //     // this.router.navigate(['/welcome']);
-    //     console.log(response);
-    //   },
-    //   error => {
-    //     // console.log(error.error);
-    //     console.log("Petclinic: Bad login or password ... signup");
-    //   });
-
-    this.authService.testRequest(credentials);
+    this.authService.signUp(credentials)
+      .subscribe(
+        response => {
+          this.router.navigate(['/auth/signin']);
 
 
-    // // // //
-    // this.store.dispatch(new AuthActions.SignUp(
-    //   {
-    //     email: this.signUpForm.value.email,
-    //     password: this.signUpForm.value.passwordGroup.newPassword,
-    //     // passwordRepeat: this.signUpForm.value.passwordGroup.newPasswordConfirm
-    //   }));
+          // // //
+          this.store.dispatch(new AuthActions.SignUp(
+            {
+              email: this.signUpForm.value.email,
+              password: this.signUpForm.value.passwordGroup.newPassword,
+              // passwordRepeat: this.signUpForm.value.passwordGroup.newPasswordConfirm
+            }));
+        },
+        error => console.log("Inalid login name or password")
+      );
+
   }
 
   passwordMatchCheckValidator(control: FormGroup): { [s: string]: boolean } {

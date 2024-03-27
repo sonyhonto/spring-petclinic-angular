@@ -10,6 +10,13 @@ import { catchError, map } from 'rxjs/operators';
 import { Credentials } from './auth/store/credentials';
 import { throwError } from 'rxjs';
 
+
+export interface Principal {
+    "usernamemail": string;
+    "password": string;
+    "roles": string[];
+};
+
 @Injectable()
 export class AuthService {
 
@@ -32,28 +39,20 @@ export class AuthService {
 
     // registerAccount()
 
-    // signUp
-    testRequest(user: Credentials) {
-
+    signUp(user: Credentials) {
         const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
 
-        const credentials =
+        const credentials: Principal =
         {
             "usernamemail": user.email,
             "password": user.password,
             "roles": ["ADMIN"]
         };
 
-        this.http.post(signin_url, credentials, {})
+        return this.http.post<Principal>(signin_url, credentials, {})
             .pipe(
                 catchError(this.handleError)
-            )
-            .subscribe(response => {
-                console.log("response .... .... .... ", response);
-
-                // response => console.log(response),
-                // error => console.log("Something exploded, call 911"));
-            });
+            );
 
     }
 
