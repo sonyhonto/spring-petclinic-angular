@@ -6,7 +6,7 @@ import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
-import { AuthService } from 'app/auth.service';
+import { AuthService } from 'app/auth/auth.service';
 import { Router } from '@angular/router';
 
 const initialState: AuthState = {
@@ -90,7 +90,6 @@ export class SignupComponent implements OnInit {
           this.isSuccessOnRegistration = true;
 
           setTimeout(() => {
-            // this.router.navigate(['nextRoute']);
             this.router.navigate(['/auth/signin']);
           }, 3000);
         },

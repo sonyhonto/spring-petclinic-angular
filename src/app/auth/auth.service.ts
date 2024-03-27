@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { AuthState } from './auth/store/auth.reducer';
+import { AuthState } from './store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { environment } from 'environments/environment';
-import { Token } from './auth/store/token';
-import { HandleError, HttpErrorHandler } from './error.service';
+import { Token } from './store/token';
+import { HandleError, HttpErrorHandler } from '../error.service';
 import { catchError, map } from 'rxjs/operators';
-import { Credentials } from './auth/store/credentials';
+import { Credentials } from './store/credentials';
 import { throwError } from 'rxjs';
 
 

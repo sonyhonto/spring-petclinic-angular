@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
 import { setTokenStore } from '../../auth/store/auth.actions';

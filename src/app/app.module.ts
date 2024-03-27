@@ -29,7 +29,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { authReducer } from './auth/store/auth.reducer';
 import { HttpErrorHandler } from './error.service';
