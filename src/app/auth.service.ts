@@ -126,14 +126,15 @@ export class AuthService {
 
         const credentials =
         {
-            "usernamemail": 'A61', //"V50",
+            "usernamemail": 'A64', //"V50",
             "password": '12', //12,
             "roles": ["ADMIN"]
         };
-        const headers = new HttpHeaders(credentials ? {
-            authorization: 'Basic ' + btoa(credentials.usernamemail + ':' + credentials.password)
-        } : {});
-        this.http.post<string>(signin_url, credentials, { headers: headers })
+        // const headers = new HttpHeaders(credentials ? {
+        //     authorization: 'Basic ' + btoa(credentials.usernamemail + ':' + credentials.password)
+        // } : {});
+        this.http.post<string>(signin_url, credentials, {})
+        // this.http.post<string>(signin_url, credentials, { headers: headers })
         // post<string>(signin_url, { headers: headers })
 
             .pipe(
