@@ -6,6 +6,7 @@ import { AuthState } from '../store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
+import { AuthService } from 'app/auth.service';
 
 const initialState: AuthState = {
   authenticated: true,
@@ -28,6 +29,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private store: Store<AppState>) {
   }
 
@@ -68,12 +70,39 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmitted() {
-    this.store.dispatch(new AuthActions.SignUp(
-      {
-        email: this.signUpForm.value.email,
-        password: this.signUpForm.value.passwordGroup.newPassword,
-        passwordRepeat: this.signUpForm.value.passwordGroup.newPasswordConfirm
-      }));
+
+    const credentials =       {
+      email: this.signUpForm.value.email,
+      password: this.signUpForm.value.passwordGroup.newPassword,
+    }
+
+    // //
+    console.log("email (onsubmitted): ", this.signUpForm.value.email);
+    console.log("password (onsubmitted): ", this.signUpForm.value.passwordGroup.newPassword);
+
+
+    // this.authService.signUp(credentials)
+    // .subscribe(
+    //   response => {
+    //     // this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
+    //     // this.router.navigate(['/welcome']);
+    //     console.log(response);
+    //   },
+    //   error => {
+    //     // console.log(error.error);
+    //     console.log("Petclinic: Bad login or password ... signup");
+    //   });
+
+    this.authService.testRequest();
+
+
+    // // // //
+    // this.store.dispatch(new AuthActions.SignUp(
+    //   {
+    //     email: this.signUpForm.value.email,
+    //     password: this.signUpForm.value.passwordGroup.newPassword,
+    //     // passwordRepeat: this.signUpForm.value.passwordGroup.newPasswordConfirm
+    //   }));
   }
 
   passwordMatchCheckValidator(control: FormGroup): { [s: string]: boolean } {

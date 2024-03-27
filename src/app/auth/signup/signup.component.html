@@ -4,7 +4,7 @@
       Sign Up
     </h2>
 
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitted()" class="form-horizontal">
       <div class="form-group">
 
         <label for="email" class="col-sm-2 control-label">EMAIL</label>
@@ -70,8 +70,10 @@
               *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['notSame']"
               class="alert-danger">Your passwords must match!!!!??!</span> -->
 
-              <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
-              class="alert-danger">Your passwords must match!</span>
+              <!-- //// Password Match Checker-->
+              <!-- <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
+              class="alert-danger">Your passwords must match!</span> -->
+              <!-- //// -->
 
              
           </div>

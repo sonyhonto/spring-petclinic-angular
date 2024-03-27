@@ -31,7 +31,7 @@ export class SetTokenParams implements Action {
 export class SignUp implements Action {
   readonly type = SIGN_UP;
 
-  constructor(public payload: { email: string, password: string, passwordRepeat: string }) {
+  constructor(public payload: { email: string, password: string }) {
   }
 }
 
