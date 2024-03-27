@@ -78,61 +78,15 @@ export class AuthService {
 
     testRequest(user: Credentials) {
 
-        // const credentials =       {
-        //     email: this.signUpForm.value.email,
-        //     password: this.signUpForm.value.passwordGroup.newPassword,
-        //   }
-
-        console.log("console ... log ... ");
-
-        // const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test';
-
-        // this.http.get(signin_url, { headers: {} })
-        // // this.http.get(signin_url)
-        //     .subscribe(
-        //         response => console.log(response),
-        //         error => console.log("Something exploded, call 911"));
-
-
-        // const signin_url = 'http://localhost:9966/petclinic/rest/auth/login';
-        // const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test';
-
-        // const credentials = {
-        //     email: 'A1',
-        //     password: '12',
-        // }
-
-        // const headers = new HttpHeaders(credentials ? {
-        //     authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
-        // } : {});
-
-        // this.http.get<string>(signin_url, { headers: headers })
-        //     // this.http.get(signin_url)
-        //     // .subscribe(
-        //     //     response => console.log(response),
-        //     //     error => console.log("Something exploded, call 911"));
-        //     .pipe(
-        //         catchError(this.handleError)
-        //     )
-        //     .subscribe(response => {
-        //         console.log("response .... .... .... ", response);
-        //     });
-
         const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
 
         const credentials =
         {
-            "usernamemail": user.email,// 'A64', //"V50",
-            "password": user.password, //'12', //12,
+            "usernamemail": user.email,
+            "password": user.password,
             "roles": ["ADMIN"]
         };
-        // const headers = new HttpHeaders(credentials ? {
-        //     authorization: 'Basic ' + btoa(credentials.usernamemail + ':' + credentials.password)
-        // } : {});
         this.http.post<string>(signin_url, credentials, {})
-        // this.http.post<string>(signin_url, credentials, { headers: headers })
-        // post<string>(signin_url, { headers: headers })
-
             .pipe(
                 catchError(this.handleError)
             )
