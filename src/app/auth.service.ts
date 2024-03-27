@@ -118,21 +118,47 @@ export class AuthService {
         //         console.log("response .... .... .... ", response);
         //     });
 
-        const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test_post';
-        const credentials = {
-            email: 'A1',
-            password: '12',
-        }
+        const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
+        // const credentials = {
+        //     email: 'A1',
+        //     password: '12',
+        // }
+
+        const credentials =
+        {
+            "usernamemail": 'A61', //"V50",
+            "password": '12', //12,
+            "roles": ["ADMIN"]
+        };
         const headers = new HttpHeaders(credentials ? {
-            authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
+            authorization: 'Basic ' + btoa(credentials.usernamemail + ':' + credentials.password)
         } : {});
-        this.http.post<string>(signin_url, { headers: headers })
+        this.http.post<string>(signin_url, credentials, { headers: headers })
+        // post<string>(signin_url, { headers: headers })
+
             .pipe(
                 catchError(this.handleError)
             )
             .subscribe(response => {
                 console.log("response .... .... .... ", response);
             });
+
+
+        // const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test_post';
+        // const credentials = {
+        //     email: 'A1',
+        //     password: '12',
+        // }
+        // const headers = new HttpHeaders(credentials ? {
+        //     authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
+        // } : {});
+        // this.http.post<string>(signin_url, { headers: headers })
+        //     .pipe(
+        //         catchError(this.handleError)
+        //     )
+        //     .subscribe(response => {
+        //         console.log("response .... .... .... ", response);
+        //     });
 
 
 
