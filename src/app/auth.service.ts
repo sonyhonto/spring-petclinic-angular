@@ -32,50 +32,7 @@ export class AuthService {
 
     // registerAccount()
 
-    signUp(credentials: Credentials) {
-        // const signin_url = 'http://localhost:9966/petclinic/api/auth/signup';
-
-        const signin_url = 'http://localhost:9966/petclinic/rest/auth/register_test';
-
-        const user =
-        {
-            "usernamemail": credentials.email, //"V50",
-            "password": credentials.password, //12,
-            "roles": ["ADMIN"]
-        };
-
-        const headers = new HttpHeaders(
-            // credentials ? {
-            // authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
-            // } : {}
-        );
-
-        // return this.http.post<Token>(signin_url, credentials, {})
-        // return this.http.post(signin_url, credentials, { headers: headers })
-
-        // return this.http.post(signin_url, credentials, {})
-        //     .pipe(
-        //         catchError(this.handleError)
-        //     );
-
-        // return this.http.post(signin_url, credentials, {})
-        // .do(
-        //     response => console.log("logging response both bad and ok..."), 
-        //     error => console.log("Something exploded, call 911"))
-
-        return this.http.get(signin_url)
-            .subscribe(
-                response => console.log(response),
-                error => console.log("Something exploded, call 911"));
-
-        // .subscribe(data => { console.log(data) })
-        // .pipe(
-        //     // catchError(this.handleError)
-        //     map(response => {response})
-        // )
-        ;
-    }
-
+    // signUp
     testRequest(user: Credentials) {
 
         const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
@@ -86,12 +43,16 @@ export class AuthService {
             "password": user.password,
             "roles": ["ADMIN"]
         };
-        this.http.post<string>(signin_url, credentials, {})
+
+        this.http.post(signin_url, credentials, {})
             .pipe(
                 catchError(this.handleError)
             )
             .subscribe(response => {
                 console.log("response .... .... .... ", response);
+
+                // response => console.log(response),
+                // error => console.log("Something exploded, call 911"));
             });
 
     }
