@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,20 +23,6 @@ export class SigninComponent implements OnInit {
 
   token: string;
 
-  // errorsMockTrue = [{
-  //   "errorEffect": 'SIGN_IN',
-  //   "error400": { "status": 400 },
-  //   "error401": { "status": 401 },
-  //   "error500": { "status": 500 },
-  //   "error0": { "status": 0 },
-  //   "error": { "status": -1 }
-  // }];
-
-  // profileForm = this.formBuilder.group({
-  //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-  //   password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-  // });
-
   profileForm = this.formBuilder.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -44,6 +31,7 @@ export class SigninComponent implements OnInit {
 
   constructor(private store: Store<{ auth: AuthState }>,
     private formBuilder: FormBuilder,
+    private router: Router,
     private authService: AuthService) {
 
   }
@@ -52,47 +40,20 @@ export class SigninComponent implements OnInit {
     this.auth$ = this.store.select('auth');
   }
 
-  signIn() {
-    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: this.token }));
-  }
-
-  signOut() {
-    this.store.dispatch(new AuthActions.SignOut());
-  }
-
-  // onSubmit() {
-  //   // change app stete
-  //   // store
-  //   // get jwt token
-
-  //   console.log("email : " + this.profileForm.value.email);
-  //   console.log("password : " + this.profileForm.value.password);
-  //   this.authService.getToken()
-  //     .subscribe(response => {
-  //       console.log("token email : " + response.email);
-  //       console.log("token jwt : " + response.token);
-  //     });
-  // }
-
   onSubmit() {
     const credentials = {
       email: this.profileForm.value.email,
       password: this.profileForm.value.password
     };
-    console.log("email : " + this.profileForm.value.email);
-    console.log("password : " + this.profileForm.value.password);
 
     this.authService.getToken(credentials)
       .subscribe(
         response => {
-          console.log("token email : " + response.email);
-          console.log("token jwt : " + response.token);
           this.token = response.token;
-          this.signIn();
+          this.router.navigate(['/welcome']);
         },
         error => {
-          // console.log(error.error);
-          console.log("Bad login or password");
+          console.log("Petclinic: Bad login or password");
         });
   }
 

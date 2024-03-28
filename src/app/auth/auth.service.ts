@@ -30,18 +30,13 @@ export class AuthService {
     authenticated = false;
     auth$: Observable<AuthState>;
 
-    // private readonly handlerError: HandleError;
-
     constructor(
         private http: HttpClient,
         private store: Store<{ auth: AuthState }>,
         private httpErrorHandler: HttpErrorHandler) {
 
         this.auth$ = this.store.select('auth');
-        // this.handlerError = httpErrorHandler.createHandleError('AuthService');
     }
-
-    // registerAccount()
 
     signUp(user: Credentials) {
         const signin_url = 'http://localhost:9966/petclinic/rest/auth/register';
