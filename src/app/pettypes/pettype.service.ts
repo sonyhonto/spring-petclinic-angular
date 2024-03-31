@@ -24,51 +24,66 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {PetType} from './pettype';
-import {HttpClient} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '../error.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'app/auth/store/auth.reducer';
 
 @Injectable()
 export class PetTypeService {
 
   entityUrl = environment.REST_API_URL + 'pettypes';
+  token$: Observable<string>;
+  authenticationHeaders: HttpHeaders;
+  headersState$: Observable<HttpHeaders>;
 
   private readonly handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
+    private store: Store<{ auth: AuthState }>) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+    this.token$ = this.store.select('auth').pipe(map(state => state.token));
+    this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token 
+    } : {})));
   }
 
   getPetTypes(): Observable<PetType[]> {
-    return this.http.get<PetType[]>(this.entityUrl)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<PetType[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getPetTypes', []))
       );
   }
 
   getPetTypeById(typeId: string): Observable<PetType> {
-    return this.http.get<PetType>((this.entityUrl + '/' + typeId))
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<PetType>((this.entityUrl + '/' + typeId), { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getPetTypeById', {} as PetType))
       );
   }
 
   updatePetType(typeId: string, petType: PetType): Observable<PetType> {
-    return this.http.put<PetType>(this.entityUrl + '/' + typeId, petType)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.put<PetType>(this.entityUrl + '/' + typeId, petType, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('updatePetType', petType))
       );
   }
 
   addPetType(petType: PetType): Observable<PetType> {
-    return this.http.post<PetType>(this.entityUrl, petType)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.post<PetType>(this.entityUrl, petType, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('addPetType', petType))
       );
   }
 
   deletePetType(typeId: string): Observable<number> {
-    return this.http.delete<number>(this.entityUrl + '/' + typeId)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.delete<number>(this.entityUrl + '/' + typeId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deletePetType', 0))
       );
