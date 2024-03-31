@@ -15,26 +15,10 @@ import { AuthState } from '../store/auth.reducer';
 export class SigninComponent implements OnInit {
 
   auth$: Observable<AuthState>;
-
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
-
   errors: [];
-
   token: string;
 
-  // errorsMockTrue = [{
-  //   "errorEffect": 'SIGN_IN',
-  //   "error400": { "status": 400 },
-  //   "error401": { "status": 401 },
-  //   "error500": { "status": 500 },
-  //   "error0": { "status": 0 },
-  //   "error": { "status": -1 }
-  // }];
-
-  // profileForm = this.formBuilder.group({
-  //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-  //   password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-  // });
 
   profileForm = this.formBuilder.group({
     email: ['', [Validators.required]],
@@ -53,26 +37,14 @@ export class SigninComponent implements OnInit {
   }
 
   signIn() {
-    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null, token: this.token }));
+    const tok = 'token is set';
+    this.store.dispatch(new AuthActions.SignIn({ token: tok }));
+
   }
 
   signOut() {
     this.store.dispatch(new AuthActions.SignOut());
   }
-
-  // onSubmit() {
-  //   // change app stete
-  //   // store
-  //   // get jwt token
-
-  //   console.log("email : " + this.profileForm.value.email);
-  //   console.log("password : " + this.profileForm.value.password);
-  //   this.authService.getToken()
-  //     .subscribe(response => {
-  //       console.log("token email : " + response.email);
-  //       console.log("token jwt : " + response.token);
-  //     });
-  // }
 
   onSubmit() {
     const credentials = {
@@ -91,7 +63,6 @@ export class SigninComponent implements OnInit {
           this.signIn();
         },
         error => {
-          // console.log(error.error);
           console.log("Bad login or password");
         });
   }

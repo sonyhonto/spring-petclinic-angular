@@ -29,6 +29,7 @@
               <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['minlength']" class="help-block">The
                 password should at least be 6 digits!</span>
             </span>
+
           </div>
         </div>
         <div class="form-group">
@@ -43,28 +44,6 @@
               <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['required']"
                 class="alert-danger">This field is required!</span>
             </span>
-
-
-            <!-- 
-            <span *ngIf="signUpForm.get('passwordGroup').invalid && signUpForm.get('passwordGroup').touched"
-            >
-              <span
-              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
-                class="alert-danger">Your passwords must match!</span>
-            </span> -->
-
-
-            <!-- <span
-              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
-              class="alert-danger">Your passwords must match!</span> -->
-              
-              <!-- *ngIf="signUpForm.hasError('notSame')" -->
-              
-              <!-- <span *ngIf="signUpForm.get('passwordGroup').errors['notSame']"
-              class="alert-danger">Your passwords must match!!!!!</span>
-              <span
-              *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['notSame']"
-              class="alert-danger">Your passwords must match!!!!??!</span> -->
 
               <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
               class="alert-danger">Your passwords must match!</span>

@@ -1,15 +1,3 @@
-<!-- <div class="signin container"> -->
-<!-- <p>signin Works!</p>
-    <p>LOGIN</p>
-    <span>Welcome back to Clinic</span> -->
-<!-- <div *ngFor="let e of errorsMockTrue">
-        <div *ngIf="e.errorEffect == 'SIGN_IN'" class="alert-warning">
-            <div *ngIf="e.error400.status === 400">Bad Credentials</div>
-            <div *ngIf="e.error401.status === 401">HTTP 401 Unauthorized Error</div>
-            <div *ngIf="e.error500.status === 500 || e.error0.status === 0">Internal server error! Please contact our
-                support team.</div>
-        </div>
-    </div> -->
 
 <div class="container-fluid">
     <div class="container xd-container">
@@ -58,21 +46,6 @@
                     <a routerLink="/auth/signup"><span class="button">Sign up!</span></a>
                 </div>
             </div>
-
-
-
-<button (click)="onSubmit()">onSubmit()</button>
-
-<button (click)="signIn()">Sign In</button>
-
-<div>Current Authenticated: {{ (auth$ | async).authenticated }}</div>
-<div>Current Token: {{ (auth$ | async).token }}</div>
-<div>Current IsActive: {{ (auth$ | async).isActive }}</div>
-<div>Current Errors: {{ (auth$ | async).errors }}</div>
-<div>Current Loading: {{ (auth$ | async).loading }}</div>
-
-<button (click)="signOut()">Sign Out</button>
-
 
 </div>
 

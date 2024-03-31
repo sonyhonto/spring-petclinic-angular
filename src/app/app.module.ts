@@ -25,9 +25,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
 import { AuthModule } from './auth/auth.module';
+import { authReducer } from './auth/store/auth.reducer';
 import { HttpErrorHandler } from './error.service';
 import { OwnersModule } from './owners/owners.module';
 import { PartsModule } from './parts/parts.module';
@@ -36,20 +39,11 @@ import { PetTypesModule } from './pettypes/pettypes.module';
 import { SpecialtiesModule } from './specialties/specialties.module';
 import { VetsModule } from './vets/vets.module';
 import { VisitsModule } from './visits/visits.module';
-import { StoreModule } from '@ngrx/store';
-import { CounterComponent } from './counter/counter.component';
-import { reducers } from './auth/store/app.reducers';
-import { counterReducer } from './auth/store-example/counter.reducer';
-import { scoreboardReducer } from './auth/store-scoreboard/scoreboard.reducer';
-import { ScoreBoardComponent } from './score-board/score-board.component';
-import { authReducer } from './auth/store/auth.reducer';
-import { AuthStateComponent } from './auth-state/auth-state.component';
-import { AuthService } from './auth.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,8 +59,9 @@ import { AuthService } from './auth.service';
     BrowserAnimationsModule,
     AuthModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {})
-
+    StoreModule.forRoot({ 
+      auth: authReducer,
+     }, {}),
   ],
   providers: [
     HttpErrorHandler,

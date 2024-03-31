@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
-import { of } from 'rxjs';
-import { Subscribable } from 'rxjs/internal/types';
-import { AuthState } from '../store/auth.reducer';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
+import { AuthState } from '../store/auth.reducer';
 
 const initialState: AuthState = {
   authenticated: true,
@@ -35,6 +34,7 @@ export class SignupComponent implements OnInit {
 
 
   ngOnInit() {
+
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       passwordGroup: this.formBuilder.group({
