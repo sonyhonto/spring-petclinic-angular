@@ -20,23 +20,23 @@
  * @author Vitaliy Fedoriv
  */
 
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
-import {OwnersModule} from './owners/owners.module';
-import {PetsModule} from './pets/pets.module';
-import {VisitsModule} from './visits/visits.module';
-import {PetTypesModule} from './pettypes/pettypes.module';
-import {VetsModule} from './vets/vets.module';
-import {PartsModule} from './parts/parts.module';
-import {SpecialtiesModule} from './specialties/specialties.module';
-import {HttpErrorHandler} from './error.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { HttpErrorHandler } from './error.service';
+import { OwnersModule } from './owners/owners.module';
+import { PartsModule } from './parts/parts.module';
+import { PetsModule } from './pets/pets.module';
+import { PetTypesModule } from './pettypes/pettypes.module';
+import { SpecialtiesModule } from './specialties/specialties.module';
+import { VetsModule } from './vets/vets.module';
+import { VisitsModule } from './visits/visits.module';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -56,7 +56,8 @@ import { AuthModule } from './auth/auth.module';
     PartsModule,
     BrowserAnimationsModule,
     AuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot({}, {})
 
   ],
   providers: [
