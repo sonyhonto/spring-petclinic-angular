@@ -8,13 +8,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../store/app.reducers';
 import * as AuthActions from '../store/auth.actions';
 
-// const initialState: AuthState = {
-//   authenticated: false,
-//   isActive: null,
-//   errors: [],
-//   loading: false
-// };
-
 const initialState: AuthState = {
   authenticated: true,
   isActive: null,
@@ -31,6 +24,7 @@ export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
   authState: Observable<AuthState> = of(initialState);
 
+
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
   constructor(
@@ -40,22 +34,6 @@ export class SignupComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.signUpForm = this.formBuilder.group({
-    //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    //   passwordGroup: this.formBuilder.group({
-    //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    //     newPasswordConfirm: ['1', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    //   }, this.passwordMatchCheckValidator.bind(this))
-    // });
-
-    // this.signUpForm = this.formBuilder.group({
-    //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    //   passwordGroup: this.formBuilder.group({
-    //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    //     newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    //   }, { validators: this.checkPasswords })
-    // });
-
 
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
@@ -67,6 +45,9 @@ export class SignupComponent implements OnInit {
 
 
     this.authState = this.store.select('auth');
+
+    console.log("store.select('auth') ", this.store.select('auth'));
+    console.log("store :  ", this.store);
 
   }
 
@@ -91,14 +72,6 @@ export class SignupComponent implements OnInit {
     }
     return null;
   }
-
-  // checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
-  //   let pass = group.get('newPassword').value;
-  //   let confirmPass = group.get('newPasswordConfirm').value
-  //   group.get('newPasswordConfirm').setErrors({ notSame: true });
-  //   return pass === confirmPass ? null : { notSame: true }
-  // }
-
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
