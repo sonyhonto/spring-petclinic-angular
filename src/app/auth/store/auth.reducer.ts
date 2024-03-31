@@ -21,12 +21,14 @@ const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch (action.type) {
+
         case (AuthActions.SIGN_IN):
             return {
                 ...state,
                 authenticated: true,
-                token: jwt
+                token: action.payload.token
             };
+
         case (AuthActions.SIGN_OUT):
             return {
                 ...state,
@@ -45,7 +47,38 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
                 loading: false
             };
 
+        case (AuthActions.SIGN_IN_SUCCESS):
+            return {
+                ...state,
+                authenticated: true,
+                errors: [...state.errors.filter(error => error.errorEffect !== action.payload.effect)],
+                loading: false
+            };
+
+        case (AuthActions.AUTH_ERROR):
+            const errors = [...state.errors];
+            const index = errors.findIndex(error => error.errorEffect === action.payload.errorEffect);
+            if (index !== -1) {
+                errors[index] = action.payload;
+            } else {
+                errors.push(action.payload);
+            }
+            return {
+                ...state,
+                loading: false,
+                errors
+            };
+
+        case (AuthActions.SIGN_OUT_SUCCESS):
+            return initialState;
+
+        case (AuthActions.FETCH_VERIFICATION_STATUS_SUCCESS):
+            return {
+                ...state,
+                isActive: action.payload
+            };
         default:
             return state;
     }
 }
+

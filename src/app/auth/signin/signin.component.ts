@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
+import { setTokenStore } from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
 
 
@@ -39,6 +40,21 @@ export class SigninComponent implements OnInit {
   signIn() {
     const tok = 'token is set';
     this.store.dispatch(new AuthActions.SignIn({ token: tok }));
+
+    // this.store.dispatch(tokenScore()); // simple solution
+
+  }
+
+  setToken() {
+    this.store.dispatch(setTokenStore({ token: 'token' }));
+  }
+
+  setTokenAction() {
+    this.store.dispatch(new AuthActions.SetToken());
+  }
+
+  setTokenActionParams() {
+    this.store.dispatch(new AuthActions.SetTokenParams({ token: 'setted token' }));
   }
 
   signOut() {
@@ -59,11 +75,15 @@ export class SigninComponent implements OnInit {
           console.log("token email : " + response.email);
           console.log("token jwt : " + response.token);
           this.token = response.token;
-          this.signIn();
+          this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
+          // this.signIn();
         },
         error => {
           console.log("Bad login or password");
         });
+
+    // const tok = this.token;
+    // this.store.dispatch(new AuthActions.SignIn({ token: tok }));
   }
 
 }
