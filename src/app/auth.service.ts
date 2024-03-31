@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthState } from './auth/store/auth.reducer';
 import { Store } from '@ngrx/store';
@@ -8,6 +8,7 @@ import { Token } from './auth/store/token';
 import { HandleError, HttpErrorHandler } from './error.service';
 import { catchError } from 'rxjs/operators';
 import { Credentials } from './auth/store/credentials';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
     authenticated = false;
     auth$: Observable<AuthState>;
 
-    private readonly handlerError: HandleError;
+    // private readonly handlerError: HandleError;
 
     constructor(
         private http: HttpClient,
@@ -26,7 +27,7 @@ export class AuthService {
         private httpErrorHandler: HttpErrorHandler) {
 
         this.auth$ = this.store.select('auth');
-        this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+        // this.handlerError = httpErrorHandler.createHandleError('AuthService');
     }
 
     // authenticate(credentials, callback) {
@@ -48,39 +49,43 @@ export class AuthService {
 
     // }
 
-    getToken(): Observable<Token> {
+    // getToken(): Observable<Token> {
+    //     const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
+
+    //     const credentials = {
+    //         email: 'A1',
+    //         password: '12'
+    //     };
+
+    //     // {
+    //     //     "email": "A1",
+    //     //     "password": "12" 
+    //     // }
+
+    //     const headers = new HttpHeaders(credentials ? {
+    //         authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
+    //     } : {});
+
+    //     return this.http.post<Token>(login_url, credentials, { headers: headers })
+    //         .pipe(
+    //             catchError(this.handlerError('getToken', {} as Token))
+    //         );
+    // }
+
+    getToken(credentials: Credentials): Observable<Token> {
         const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
-
-        const credentials = {
-            email: 'A1',
-            password: '12'
-        };
-
-        // {
-        //     "email": "A1",
-        //     "password": "12" 
-        // }
-
         const headers = new HttpHeaders(credentials ? {
             authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
         } : {});
 
-        return this.http.post<Token>(login_url, credentials, {headers: headers})
+        return this.http.post<Token>(login_url, credentials, { headers: headers })
             .pipe(
-                catchError(this.handlerError('getToken', {} as Token))
+                catchError(this.handleError)
             );
     }
 
-    getToken1(credentials: Credentials): Observable<Token> {
-        const login_url = 'http://localhost:9966/petclinic/rest/auth/login';
-        const headers = new HttpHeaders(credentials ? {
-            authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
-        } : {});
-
-        return this.http.post<Token>(login_url, credentials, {headers: headers})
-            .pipe(
-                catchError(this.handlerError('getToken', {} as Token))
-            );
+    handleError(error: HttpErrorResponse) {
+        return throwError(error);
     }
 
 }
