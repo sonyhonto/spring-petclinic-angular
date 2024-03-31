@@ -21,10 +21,13 @@
           <label for="password" class="col-sm-2 control-label">PASSWORD</label>
           <div class="col-sm-10">
             <input type="password" id="newPassword" class="form-control" name="newPassword"
-              formControlName="newPassword" >
-            <span *ngIf="true">
-              <span *ngIf="profileForm.dirty" class="help-block">This field is required!</span>
-              <span *ngIf="profileForm.controls.passwordGroup.dirty" class="help-block">The password should at least be 6 digits!</span>
+              formControlName="newPassword" [maxlength]="160">
+            <span
+              *ngIf="signUpForm.get('passwordGroup.newPassword').invalid && signUpForm.get('passwordGroup.newPassword').touched">
+              <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['required']" class="help-block">This field
+                is required!</span>
+              <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['minlength']" class="help-block">The
+                password should at least be 6 digits!</span>
             </span>
           </div>
         </div>
@@ -32,20 +35,58 @@
           <label for="newPasswordConfirm" class="col-sm-2 control-label">PASSWORD REPEAT</label>
           <div class="col-sm-10">
             <input type="password" id="newPasswordConfirm" class="form-control" name="newPasswordConfirm"
-              formControlName="newPasswordConfirm">
-            <span *ngIf="true">
-              <span *ngIf="true" class="alert-danger">This field is required!</span>
+              formControlName="newPasswordConfirm" [maxlength]="160"
+              placeholder="New password"
+              >
+            <span
+              *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').invalid && signUpForm.get('passwordGroup.newPasswordConfirm').touched">
+              <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['required']"
+                class="alert-danger">This field is required!</span>
             </span>
-            <span *ngIf="true">
-              <span class="alert-danger">Your passwords must match!</span>
-            </span>
+
+
+            <!-- 
+            <span *ngIf="signUpForm.get('passwordGroup').invalid && signUpForm.get('passwordGroup').touched"
+            >
+              <span
+              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
+                class="alert-danger">Your passwords must match!</span>
+            </span> -->
+
+
+            <!-- <span
+              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
+              class="alert-danger">Your passwords must match!</span> -->
+              
+              <!-- *ngIf="signUpForm.hasError('notSame')" -->
+              
+              <!-- <span *ngIf="signUpForm.get('passwordGroup').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!!</span>
+              <span
+              *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!??!</span> -->
+
+              <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
+              class="alert-danger">Your passwords must match!</span>
+
+             
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" type="submit"> Login</button>
+            <button class="btn btn-default" type="submit"> Register</button>
           </div>
         </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <p>Already have an account?
+              <a routerLink="/auth/signin">
+                <span>Login!</span>
+              </a>
+            </p>
+          </div>
+        </div>
+
       </div>
     </form>
   </div>

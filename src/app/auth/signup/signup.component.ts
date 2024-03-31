@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs';
 import { Subscribable } from 'rxjs/internal/types';
@@ -29,31 +29,9 @@ const initialState: AuthState = {
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
-  // authState: AuthState = initialState;
   authState: Observable<AuthState> = of(initialState);
 
-
-  // authState: Observable<AuthState>;
-
-  // authState: Observable<AuthState> = {
-  //   authenticated: false,
-  //   isActive: null,
-  //   errors: [],
-  //   loading: false
-  // };
-
-
-
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
-
-
-  profileForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    passwordGroup: this.formBuilder.group({
-      newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-      newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-    }, this.passwordMatchCheckValidator.bind(this))
-  });
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,25 +40,38 @@ export class SignupComponent implements OnInit {
 
 
   ngOnInit() {
+    // this.signUpForm = this.formBuilder.group({
+    //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    //   passwordGroup: this.formBuilder.group({
+    //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    //     newPasswordConfirm: ['1', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    //   }, this.passwordMatchCheckValidator.bind(this))
+    // });
+
+    // this.signUpForm = this.formBuilder.group({
+    //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    //   passwordGroup: this.formBuilder.group({
+    //     newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    //     newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    //   }, { validators: this.checkPasswords })
+    // });
+
+
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       passwordGroup: this.formBuilder.group({
         newPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
         newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
-      }, this.passwordMatchCheckValidator.bind(this))
+      }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
 
-    this.authState = this.store.select('auth');
 
-    // this.store.select('auth').subscribe(state => {
-    //   this.authState = state;
-    // });
+    this.authState = this.store.select('auth');
 
   }
 
 
   onSubmit() {
-    // console.log('profile form : ', this.profileForm);
     console.log('signup form : ', this.signUpForm);
   }
 
@@ -94,9 +85,36 @@ export class SignupComponent implements OnInit {
   }
 
   passwordMatchCheckValidator(control: FormGroup): { [s: string]: boolean } {
+    console.log('match check');
     if (control.value.newPassword !== control.value.newPasswordConfirm) {
       return { noMatch: true };
     }
     return null;
+  }
+
+  // checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
+  //   let pass = group.get('newPassword').value;
+  //   let confirmPass = group.get('newPasswordConfirm').value
+  //   group.get('newPasswordConfirm').setErrors({ notSame: true });
+  //   return pass === confirmPass ? null : { notSame: true }
+  // }
+
+
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (
+        matchingControl.errors &&
+        !matchingControl.errors.confirmedValidator
+      ) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 }
