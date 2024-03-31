@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Owner } from 'app/owners/owner';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/internal/Observable';
+import { AuthService } from '../../auth.service';
+import * as AuthActions from '../../auth/store/auth.actions';
+import { AuthState } from '../store/auth.reducer';
+
 
 @Component({
   selector: 'app-signin',
@@ -9,53 +14,90 @@ import { Owner } from 'app/owners/owner';
 })
 export class SigninComponent implements OnInit {
 
-  errors: [];
-  errorsMockTrue = [{
-    "errorEffect": 'SIGN_IN',
-    "error400": { "status": 400 },
-    "error401": { "status": 401 },
-    "error500": { "status": 500 },
-    "error0": { "status": 0 },
-    "error": { "status": -1 }
-  }];
+  auth$: Observable<AuthState>;
 
   emailPattern = '^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$';
 
-  authState = '';
+  errors: [];
+  // errorsMockTrue = [{
+  //   "errorEffect": 'SIGN_IN',
+  //   "error400": { "status": 400 },
+  //   "error401": { "status": 401 },
+  //   "error500": { "status": 500 },
+  //   "error0": { "status": 0 },
+  //   "error": { "status": -1 }
+  // }];
+
+  // profileForm = this.formBuilder.group({
+  //   email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+  //   password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+  // });
 
   profileForm = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
-  owner: Owner;
-  errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private store: Store<{ auth: AuthState }>,
+    private formBuilder: FormBuilder,
+    private authService: AuthService) {
+
+  }
 
   ngOnInit() {
-
-    // this.authState = this.store.select('auth');
-    this.authState = '';
-
-
+    this.auth$ = this.store.select('auth');
   }
 
-  onSubmitted() {
-    // this.store.dispatch(new AuthActions.SignIn({
-    //   email: this.signInForm.value.email,
-    //   password: this.signInForm.value.password
-    // }));
+  signIn() {
+    this.store.dispatch(new AuthActions.SignIn({ email: null, password: null }));
   }
 
-  printConsole() {
-    console.log("errors mock : ", this.errorsMockTrue);
+  signOut() {
+    this.store.dispatch(new AuthActions.SignOut());
   }
+
+  // onSubmit() {
+  //   // change app stete
+  //   // store
+  //   // get jwt token
+
+  //   console.log("email : " + this.profileForm.value.email);
+  //   console.log("password : " + this.profileForm.value.password);
+  //   this.authService.getToken()
+  //     .subscribe(response => {
+  //       console.log("token email : " + response.email);
+  //       console.log("token jwt : " + response.token);
+  //     });
+  // }
+
+  // setToken() {
+  //   const credentials = {
+  //     email: this.profileForm.value.email,
+  //     password: this.profileForm.value.password
+  //   };
+
+  //   this.authService.getToken1(credentials)
+  //     .subscribe(response => {
+  //       console.log("token email : " + response.email);
+  //       console.log("token jwt : " + response.token);
+  //     });
+  // }
 
   onSubmit() {
-    console.log('value : ', this.profileForm.value);
-    console.log('valid : ', this.profileForm.valid);
-    console.log('this.profileForm : ', this.profileForm);
+    const credentials = {
+      email: this.profileForm.value.email,
+      password: this.profileForm.value.password
+    };
+    console.log("email : " + this.profileForm.value.email);
+    console.log("password : " + this.profileForm.value.password);
+    this.authService.getToken1(credentials)
+      .subscribe(response => {
+        console.log("token email : " + response.email);
+        console.log("token jwt : " + response.token);
+      });
   }
 
 }
+
+
