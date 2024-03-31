@@ -10,6 +10,7 @@ import * as AuthActions from '../store/auth.actions';
 
 const initialState: AuthState = {
   authenticated: true,
+  token: null,
   isActive: null,
   errors: [],
   loading: false
@@ -34,7 +35,6 @@ export class SignupComponent implements OnInit {
 
 
   ngOnInit() {
-
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       passwordGroup: this.formBuilder.group({
@@ -42,7 +42,6 @@ export class SignupComponent implements OnInit {
         newPasswordConfirm: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(52)]],
       }, { validator: this.ConfirmedValidator('newPassword', 'newPasswordConfirm') })
     });
-
 
     this.authState = this.store.select('auth');
 
