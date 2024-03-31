@@ -39,7 +39,6 @@ export class SigninComponent implements OnInit {
   signIn() {
     const tok = 'token is set';
     this.store.dispatch(new AuthActions.SignIn({ token: tok }));
-
   }
 
   signOut() {
