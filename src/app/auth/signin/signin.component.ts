@@ -67,15 +67,9 @@ export class SigninComponent implements OnInit {
           this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
           this.token = response.token;
           this.router.navigate(['/welcome']);
-
-              // d
-          console.log("token email : " + response.email);
-          console.log("token jwt : " + response.token);
         },
         error => {
-          // console.log(error.error);
           console.log("Petclinic: Bad login or password");
-            //\d
         });
 
   }

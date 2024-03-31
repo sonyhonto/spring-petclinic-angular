@@ -44,15 +44,6 @@ export class SignupComponent implements OnInit {
     });
 
     this.authState = this.store.select('auth');
-
-    console.log("store.select('auth') ", this.store.select('auth'));
-    console.log("store :  ", this.store);
-
-  }
-
-
-  onSubmit() {
-    console.log('signup form : ', this.signUpForm);
   }
 
   onSubmitted() {
@@ -65,7 +56,6 @@ export class SignupComponent implements OnInit {
   }
 
   passwordMatchCheckValidator(control: FormGroup): { [s: string]: boolean } {
-    console.log('match check');
     if (control.value.newPassword !== control.value.newPasswordConfirm) {
       return { noMatch: true };
     }

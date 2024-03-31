@@ -1,19 +1,24 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { catchError } from 'rxjs/operators';
 import { AuthState } from './auth/store/auth.reducer';
-import { Credentials } from './auth/store/credentials';
+import { Store } from '@ngrx/store';
+import { environment } from 'environments/environment';
 import { Token } from './auth/store/token';
-import { HttpErrorHandler } from './error.service';
+import { HandleError, HttpErrorHandler } from './error.service';
+import { catchError } from 'rxjs/operators';
+import { Credentials } from './auth/store/credentials';
 
 @Injectable()
 export class AuthService {
 
+    // entityUrl = environment.REST_API_URL;
+    // REST_API_URL: 'http://localhost:9966/petclinic/api/'
+
     authenticated = false;
     auth$: Observable<AuthState>;
+
+    private readonly handlerError: HandleError;
 
     constructor(
         private http: HttpClient,
@@ -21,7 +26,7 @@ export class AuthService {
         private httpErrorHandler: HttpErrorHandler) {
 
         this.auth$ = this.store.select('auth');
-        // this.handlerError = httpErrorHandler.createHandleError('AuthService');
+        this.handlerError = httpErrorHandler.createHandleError('OwnerService');
     }
 
     getToken(credentials: Credentials): Observable<Token> {
@@ -30,14 +35,10 @@ export class AuthService {
             authorization: 'Basic ' + btoa(credentials.email + ':' + credentials.password)
         } : {});
 
-        return this.http.post<Token>(login_url, credentials, { headers: headers })
+        return this.http.post<Token>(login_url, credentials, {headers: headers})
             .pipe(
-                catchError(this.handleError)
+                catchError(this.handlerError('getToken', {} as Token))
             );
-    }
-
-    handleError(error: HttpErrorResponse) {
-        return throwError(error);
     }
 
 }
