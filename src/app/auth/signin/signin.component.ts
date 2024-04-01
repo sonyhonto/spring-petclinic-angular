@@ -62,28 +62,28 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
+    // d
     const credentials = {
       email: this.profileForm.value.email,
       password: this.profileForm.value.password
     };
     console.log("email : " + this.profileForm.value.email);
     console.log("password : " + this.profileForm.value.password);
+    //\d
 
     this.authService.getToken(credentials)
       .subscribe(
         response => {
+          this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
+          this.token = response.token;
+
           console.log("token email : " + response.email);
           console.log("token jwt : " + response.token);
-          this.token = response.token;
-          this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
-          // this.signIn();
         },
         error => {
           console.log("Bad login or password");
         });
 
-    // const tok = this.token;
-    // this.store.dispatch(new AuthActions.SignIn({ token: tok }));
   }
 
 }
