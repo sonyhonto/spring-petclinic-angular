@@ -40,7 +40,6 @@ import { SpecialtiesModule } from './specialties/specialties.module';
 import { VetsModule } from './vets/vets.module';
 import { VisitsModule } from './visits/visits.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

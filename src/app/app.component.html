@@ -75,7 +75,6 @@
           <ul class="dropdown-menu">
             <li><a routerLink="/auth/signin">Sign In</a></li>
             <li><a routerLink="/auth/signup">Sign Up</a></li>
-            <li><a routerLink="/auth/forgotpass">Forgot</a></li>
             <li *ngIf="isAthenticated == false"><a (click)="setAuthenticated()">Try Mode</a></li>
           </ul>
         </li>

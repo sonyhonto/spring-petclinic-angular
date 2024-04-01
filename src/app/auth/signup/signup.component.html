@@ -4,7 +4,7 @@
       Sign Up
     </h2>
 
-    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitted()" class="form-horizontal">
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="form-horizontal">
       <div class="form-group">
 
         <label for="email" class="col-sm-2 control-label">EMAIL</label>
@@ -30,6 +30,9 @@
                 password should at least be 6 digits!</span>
             </span>
 
+            <!-- <span class="help-block" *ngIf="telephone.dirty && telephone.hasError('required')">Phone number is required</span>
+            <span class="help-block" *ngIf="telephone.dirty && telephone.hasError('maxlength')">Phone number cannot be more than 10 digits long</span>
+            <span class="help-block" *ngIf="telephone.dirty && telephone.hasError('pattern')" >Phone number only accept digits</span> -->
           </div>
         </div>
         <div class="form-group">
@@ -44,6 +47,28 @@
               <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['required']"
                 class="alert-danger">This field is required!</span>
             </span>
+
+
+            <!-- 
+            <span *ngIf="signUpForm.get('passwordGroup').invalid && signUpForm.get('passwordGroup').touched"
+            >
+              <span
+              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
+                class="alert-danger">Your passwords must match!</span>
+            </span> -->
+
+
+            <!-- <span
+              *ngIf="signUpForm.get('passwordGroup').errors != null && signUpForm.get('passwordGroup').errors['noMatch']"
+              class="alert-danger">Your passwords must match!</span> -->
+              
+              <!-- *ngIf="signUpForm.hasError('notSame')" -->
+              
+              <!-- <span *ngIf="signUpForm.get('passwordGroup').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!!</span>
+              <span
+              *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['notSame']"
+              class="alert-danger">Your passwords must match!!!!??!</span> -->
 
               <span *ngIf="signUpForm.get('passwordGroup.newPasswordCnofirm').errors['confirmedValidator']"
               class="alert-danger">Your passwords must match!</span>

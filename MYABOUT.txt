@@ -1,0 +1,49 @@
+Add authorization
+
+Add administrators to the projects
+(different roles)
+root
+and simple-administrator
+
+*Add login page
+
+*Remove author from frontend
+
+= =
+* make routing trough vets.routing 
+* delete routing module (make it in future)
+
+* concentrate on creating a flogin components
+** complete lesson, make 2 level application (routing modules that include child 
+routing modules)
+
+= =
+* disappearing menu items
+
+=
+validation of password do later
+https://angular.io/guide/form-validation
+
+
+note: Observablr, Pipes, and subscribe
+https://blog.logrocket.com/using-observables-transform-data-typescript/
+
+
+change StoreModule.forRoot()  if  possible
+
+
+
+==
+note: (as initializr)
+spring init --dependencies web,security ui/ && cd ui
+
+= =
+* login with user and password 
+* get bearer jwt token in response
+    save it somewhere 
+    use it to work with site
+
+* delete token from state after logout
+
+=
+? light bug in login form   
