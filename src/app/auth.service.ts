@@ -21,6 +21,7 @@ export class AuthService {
         private httpErrorHandler: HttpErrorHandler) {
 
         this.auth$ = this.store.select('auth');
+        // this.handlerError = httpErrorHandler.createHandleError('AuthService');
     }
 
     getToken(credentials: Credentials): Observable<Token> {
@@ -37,9 +38,6 @@ export class AuthService {
 
     handleError(error: HttpErrorResponse) {
         return throwError(error);
-    }
-
-    saveToken(token): void {
     }
 
 }

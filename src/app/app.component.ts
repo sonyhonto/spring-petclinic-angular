@@ -20,12 +20,11 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component} from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AuthState } from './auth/store/auth.reducer';
-import * as AuthActions from './auth/store/auth.actions';
-import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as AuthActions from './auth/store/auth.actions';
+import { AuthState } from './auth/store/auth.reducer';
 
 @Component({
   selector: 'app-root',
@@ -42,12 +41,6 @@ export class AppComponent {
     this.store.select('auth').subscribe(state => {
       this.isAthenticated = state.authenticated;
     });
-    
-    // this.token$ = this.store.select('auth').pipe(map(state => state.token));
-
-    // this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
-    //   authorization: 'Bearer ' + token
-    // } : {})));
   }
 
   setAuthenticated() {

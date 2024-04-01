@@ -11,13 +11,12 @@ export interface AuthState {
 
 const initialState: AuthState = {
     authenticated: false,
-    token: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4', // null, 
+    token: null,
     isActive: null,
     errors: [],
     loading: false
 };
 
-const jwt: string = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBMSIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIFJPTEVfT1dORVJfQURNSU4sIFJPTEVfVkVUX0FETUlOXSIsImV4cCI6MTkyNzE4MjQxNX0.GxhZqsw3oeeX4VkxrzBHyyx80dTf0-35AAA-ajvpVP4';
 
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch (action.type) {
