@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthService } from '../../auth.service';
 import * as AuthActions from '../../auth/store/auth.actions';
-import { setTokenStore } from '../../auth/store/auth.actions';
 import { AuthState } from '../store/auth.reducer';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -29,7 +29,8 @@ export class SigninComponent implements OnInit {
 
   constructor(private store: Store<{ auth: AuthState }>,
     private formBuilder: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -40,13 +41,6 @@ export class SigninComponent implements OnInit {
   signIn() {
     const tok = 'token is set';
     this.store.dispatch(new AuthActions.SignIn({ token: tok }));
-
-    // this.store.dispatch(tokenScore()); // simple solution
-
-  }
-
-  setToken() {
-    this.store.dispatch(setTokenStore({ token: 'token' }));
   }
 
   setTokenAction() {
@@ -62,26 +56,26 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    // d
     const credentials = {
       email: this.profileForm.value.email,
       password: this.profileForm.value.password
     };
-    console.log("email : " + this.profileForm.value.email);
-    console.log("password : " + this.profileForm.value.password);
-    //\d
 
     this.authService.getToken(credentials)
       .subscribe(
         response => {
           this.store.dispatch(new AuthActions.SignIn({ token: response.token }));
           this.token = response.token;
+          this.router.navigate(['/welcome']);
 
+              // d
           console.log("token email : " + response.email);
           console.log("token jwt : " + response.token);
         },
         error => {
-          console.log("Bad login or password");
+          // console.log(error.error);
+          console.log("Petclinic: Bad login or password");
+            //\d
         });
 
   }
