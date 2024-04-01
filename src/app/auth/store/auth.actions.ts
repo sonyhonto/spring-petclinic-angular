@@ -1,3 +1,7 @@
+/**
+ * @author Sony Honto
+ */
+
 import { Action } from '@ngrx/store';
 
 export const SIGN_UP = 'SIGN_UP';

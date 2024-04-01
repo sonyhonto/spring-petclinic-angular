@@ -1,3 +1,7 @@
+/**
+ * @author Sony Honto
+ */
+
 import { HttpErrorResponse } from "@angular/common/http";
 import { ActionReducerMap } from "@ngrx/store";
 import { AuthState, authReducer } from "./auth.reducer";

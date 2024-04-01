@@ -1,3 +1,7 @@
+/**
+ * @author Sony Honto
+ */
+
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import { SignupComponent } from 'app/auth/signup/signup.component';

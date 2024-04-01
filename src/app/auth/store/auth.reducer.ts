@@ -1,3 +1,7 @@
+/**
+ * @author Sony Honto
+ */
+
 import { HttpError } from "./app.reducers";
 import * as AuthActions from './auth.actions';
 
