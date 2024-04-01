@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <div class="container xd-container">
+    <h2>
+      Sign Up
+    </h2>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitted()" class="form-horizontal">
+      <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">EMAIL</label>
+        <div class="col-sm-10">
+          <input id="email" class="form-control" type="text" formControlName="email">
+          <span *ngIf="signUpForm.get('email').invalid && signUpForm.get('email').touched" class="help-block">
+            Please enter a valid email!
+          </span>
+        </div>
+      </div>
+      <div formGroupName="passwordGroup">
+        <div class="form-group">
+          <label for="password" class="col-sm-2 control-label">PASSWORD</label>
+          <div class="col-sm-10">
+            <input type="password" id="newPassword" class="form-control" name="newPassword"
+              formControlName="newPassword" [maxlength]="160">
+            <span
+              *ngIf="signUpForm.get('passwordGroup.newPassword').invalid && signUpForm.get('passwordGroup.newPassword').touched">
+              <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['required']" class="help-block">This field
+                is required!</span>
+              <span *ngIf="signUpForm.get('passwordGroup.newPassword').errors['minlength']" class="help-block">The
+                password should at least be 6 digits!</span>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="newPasswordConfirm" class="col-sm-2 control-label">PASSWORD REPEAT</label>
+          <div class="col-sm-10">
+            <input type="password" id="newPasswordConfirm" class="form-control" name="newPasswordConfirm"
+              formControlName="newPasswordConfirm" [maxlength]="160" placeholder="New password">
+            <span
+              *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').invalid && signUpForm.get('passwordGroup.newPasswordConfirm').touched">
+              <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['required']"
+                class="alert-danger">This field is required!</span>
+            </span>
+            <span *ngIf="signUpForm.get('passwordGroup.newPasswordConfirm').errors['confirmedValidator']"
+              class="alert-danger">Your passwords must match!</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <span *ngIf="isSuccessOnRegistration" class="alert-success"> Registration was sucessful!</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-default" type="submit"> Register</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <p>Already have an account?
+              <a routerLink="/auth/signin">
+                <span>Login!</span>
+              </a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

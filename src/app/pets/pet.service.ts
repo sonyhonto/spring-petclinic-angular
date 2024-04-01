@@ -24,30 +24,42 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {Pet} from './pet';
-import {HttpClient} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
 import {HandleError, HttpErrorHandler} from '../error.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'app/auth/store/auth.reducer';
 
 @Injectable()
 export class PetService {
 
   private entityUrl = environment.REST_API_URL + 'pets';
+  token$: Observable<string>;
+  authenticationHeaders: HttpHeaders;
+  headersState$: Observable<HttpHeaders>;
 
   private readonly handlerError: HandleError;
 
-  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler) {
-    this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+  constructor(private http: HttpClient, private httpErrorHandler: HttpErrorHandler,
+    private store: Store<{ auth: AuthState }>) {
+    this.handlerError = httpErrorHandler.createHandleError('PetService');
+    this.token$ = this.store.select('auth').pipe(map(state => state.token));
+    this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token 
+    } : {})));
   }
 
   getPets(): Observable<Pet[]> {
-    return this.http.get<Pet[]>(this.entityUrl)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<Pet[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getPets', []))
       );
   }
 
   getPetById(petId: number): Observable<Pet> {
-    return this.http.get<Pet>(this.entityUrl + '/' + petId)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.get<Pet>(this.entityUrl + '/' + petId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('getPetById', {} as Pet))
       );
@@ -56,21 +68,24 @@ export class PetService {
   addPet(pet: Pet): Observable<Pet> {
     const ownerId = pet.owner.id;
     const ownersUrl = environment.REST_API_URL + `owners/${ownerId}/pets`;
-    return this.http.post<Pet>(ownersUrl, pet)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.post<Pet>(ownersUrl, pet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('addPet', pet))
       );
   }
 
   updatePet(petId: string, pet: Pet): Observable<Pet> {
-    return this.http.put<Pet>(this.entityUrl + '/' + petId, pet)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.put<Pet>(this.entityUrl + '/' + petId, pet, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('updatePet', pet))
       );
   }
 
   deletePet(petId: string): Observable<number> {
-    return this.http.delete<number>(this.entityUrl + '/' + petId)
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
+    return this.http.delete<number>(this.entityUrl + '/' + petId, { headers: this.authenticationHeaders })
       .pipe(
         catchError(this.handlerError('deletePet', 0))
       );

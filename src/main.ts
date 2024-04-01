@@ -19,9 +19,12 @@
 // import './polyfills.ts';
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { enableProdMode } from '@angular/core';
 import { environment } from './environments/environment';
 import { AppModule } from './app/app.module';
+import { AppComponent } from 'app/app.component';
+// import { appConfig } from 'app/app.config';
 
 if (environment.production) {
   enableProdMode();
@@ -29,3 +32,14 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
+
+// bootstrapApplication(AppComponent, appConfig)
+//   .catch((err) => console.error(err));
+
+
+// bootstrapApplication(AppComponent, {
+//   providers: [
+//     provideStore(),
+//     provideState({ name: 'game', reducer: scoreboardReducer })
+//   ],
+// });

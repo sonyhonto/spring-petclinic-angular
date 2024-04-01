@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <div class="container xd-container">
+        <h2>
+            Sign In
+        </h2>
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+            <div class="form-group has-feedback">
+                <label for="email" class="col-sm-2 control-label">EMAIL</label>
+                <div class="col-sm-10">
+                    <input id="email" class="form-control" type="text" formControlName="email">
+                </div>
+                <label for="password" class="col-sm-2 control-label">PASSWORD</label>
+                <div class="col-sm-10">
+                    <input id="password" type="password" class="form-control" name="password"
+                        formControlName="password">
+                </div>
+                <div class="col-sm-10">
+                    <div>
+                        <span *ngIf="profileForm.controls.email.status === 'INVALID'">This field is required!</span>
+                    </div>
+                    <div *ngIf="profileForm.controls.email.status === 'VALID'">
+                        <span *ngIf="profileForm.controls.password.status === 'INVALID'">The
+                            password should at least be 6 digits!</span>
+                    </div>
+                </div>
+                <div class="col-sm-10">
+                    <button class="btn btn-default" type="submit" [disabled]="!profileForm.valid"> Login</button>
+                </div>
+            </div>
+        </form>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2">
+                    <a routerLink="/auth/forgotpass">
+                        <p>Forgot your password?</p>
+                    </a>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <p>Don't have an account?</p>
+                    <a routerLink="/auth/signup"><span class="button">Sign up!</span></a>
+                </div>
+            </div>
+            <button (click)="onSubmit()">onSubmit()</button>
+        </div>
+    </div>
+</div>

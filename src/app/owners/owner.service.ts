@@ -24,51 +24,66 @@ import { Injectable } from '@angular/core';
 import { Owner } from './owner';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { HandleError, HttpErrorHandler } from '../error.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from 'app/auth/store/auth.reducer';
 
 @Injectable()
 export class OwnerService {
   entityUrl = environment.REST_API_URL + 'owners';
+  token$: Observable<string>;
+  authenticationHeaders: HttpHeaders;
+  headersState$: Observable<HttpHeaders>;
 
   private readonly handlerError: HandleError;
 
   constructor(
     private http: HttpClient,
-    private httpErrorHandler: HttpErrorHandler
+    private httpErrorHandler: HttpErrorHandler,
+    private store: Store<{ auth: AuthState }>
   ) {
     this.handlerError = httpErrorHandler.createHandleError('OwnerService');
+    this.token$ = this.store.select('auth').pipe(map(state => state.token));
+    this.headersState$ = this.token$.pipe(map(token => new HttpHeaders(token ? {
+      authorization: 'Bearer ' + token 
+    } : {})));
   }
 
   getOwners(): Observable<Owner[]> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .get<Owner[]>(this.entityUrl)
+      .get<Owner[]>(this.entityUrl, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('getOwners', [])));
   }
 
   getOwnerById(ownerId: number): Observable<Owner> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .get<Owner>(this.entityUrl + '/' + ownerId)
+      .get<Owner>(this.entityUrl + '/' + ownerId, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('getOwnerById', {} as Owner)));
   }
 
   addOwner(owner: Owner): Observable<Owner> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .post<Owner>(this.entityUrl, owner)
+      .post<Owner>(this.entityUrl, owner, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('addOwner', owner)));
   }
 
 
   updateOwner(ownerId: string, owner: Owner): Observable<{}> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .put<Owner>(this.entityUrl + '/' + ownerId, owner)
+      .put<Owner>(this.entityUrl + '/' + ownerId, owner, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('updateOwner', owner)));
   }
 
   deleteOwner(ownerId: string): Observable<{}> {
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .delete<Owner>(this.entityUrl + '/' + ownerId)
+      .delete<Owner>(this.entityUrl + '/' + ownerId, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('deleteOwner', [ownerId])));
   }
 
@@ -77,8 +92,9 @@ export class OwnerService {
     if (lastName !== undefined) {
       url += '?lastName=' + lastName;
     }
+    this.headersState$.subscribe(headers => this.authenticationHeaders = headers);
     return this.http
-      .get<Owner[]>(url)
+      .get<Owner[]>(url, { headers: this.authenticationHeaders })
       .pipe(catchError(this.handlerError('searchOwners', [])));
   }
 }

@@ -20,13 +20,36 @@
  * @author Vitaliy Fedoriv
  */
 
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as AuthActions from './auth/store/auth.actions';
+import { AuthState } from './auth/store/auth.reducer';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
 
+  isAthenticated: boolean = false;
+
+  constructor(private store: Store<{ auth: AuthState }>,
+    private router: Router) {
+
+    this.store.select('auth').subscribe(state => {
+      this.isAthenticated = state.authenticated;
+    });
+  }
+
+  setAuthenticated() {
+    this.isAthenticated = true;
+  }
+
+  setLogout() {
+    this.isAthenticated = false;
+    this.store.dispatch(new AuthActions.SignOut());
+    this.router.navigate(['/welcome']);
+  }
 }
